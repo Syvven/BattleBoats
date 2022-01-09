@@ -1,2 +1,5 @@
 # BattleShip
-Game of Battleship written in Java. Playable in terminal.
+Game of Battleship
+    -> Written in Java
+    -> Playable in terminal
+    -> Two Player
