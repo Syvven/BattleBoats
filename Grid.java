@@ -21,6 +21,7 @@ public class Grid {
         this.rows = rows;
         this.cols = cols;
 
+        // creates the grid and generates the boat based off the grid size
         fill_grid();
         generate_boats();
 
@@ -105,24 +106,39 @@ public class Grid {
 
     public void place_boats_player() {
 
-    }
+    } // place_boats_player
 
     // method for randomly placing boats in the case that an AI is playing
     public void place_boats_AI() {
+
+        /*************************************************************
+            initiates a tracker variable for loop termination as well as 
+            to determine which boat is being placed and starts the loop.
+            Loops until the last boat has been placed. 
+        *************************************************************/
         int numBoat = this.boats.length;
         while (numBoat != 0) {
+            
+            // the row, column, and orientation are randomly generated for each boat in the boat array of the AI.
             char orient;
             int row = (int)(Math.random()*this.rows);
             int col = (int)(Math.random()*this.cols);
             double way = Math.random();
             Boat curBoat = this.boats[numBoat-1];
 
+            // determines the orientation based on what number is randomly generated
             if (way > 0.5) {
                 orient = 'V';
             } else {
                 orient = 'H';
             }
 
+            /******************************************************************************* 
+                attempts to place the boat at the generated coordinates
+                if the boat is not successfully placed, new random coordinates are generated 
+                if the boat is successfully placed, the tracking variable is decremented and 
+                coordinates are generated for the next boat
+            *******************************************************************************/
             int success = place_boat(curBoat, row, col, orient);
             if (success == 0) {
                 numBoat -= 1;
@@ -130,11 +146,28 @@ public class Grid {
         }
     } // place_boats_AI
     
+    /*************************************************************************
+        Method to place boats. returns 0 on success and -1 on failure.
+        The input row and column determine where the first square of the boat
+        location will be. If orientation is vertical, the subsequent boat
+        location squares will be the squares directly above the input square.
+        If the orientation is horizontal, the subsequent boat location
+        squares will be the squares directly to the right of the input square.
+        The boat will fail to be placed when the starting location is
+        close enough to either the top or right edge of the board such that
+        a portion of the boat would be out of bounds. Otherwise, success.
+    *************************************************************************/
     public int place_boat(Boat boat, int row, int col, char orient) {
+
+        // input orientation is 'V' for vertical
         if (orient == 'V') {
+
+            // checks if the boat can be placed at the specified coordinate, fails if not
             if ((row - (boat.get_size() - 1)) < 0) {
                 return -1;
             } else {
+
+                // checks if the boat would intersect with any other boat, fails if so
                 Square[] loc = new Square[boat.get_size()];
                 for (int i = 0; i < loc.length; i++) {
                     if (this.grid[row-i][col].get_state() == 'B') {
@@ -142,31 +175,55 @@ public class Grid {
                     }
                 }
 
+                /**************************************************
+                    will only get here if the boat can be placed
+                    sets each element of the location array of the 
+                    boat to each of the squares that the boat will
+                    occupy on the grid
+                **************************************************/
                 for (int i = 0; i < loc.length; i++) {
                     loc[i] = this.grid[row-i][col];
                     this.grid[row-i][col].set_state('B');
                 }
+
+                // sets the location array of boat as well as the orientation
                 boat.set_loc(loc);
                 boat.set_orient('V');
             }
+
+        // input orientation is 'H' for horizontal
         } else if (orient == 'H') {
+
+            // checks if the boat can be placed at the specified coordinate, fails if not
             if ((col + (boat.get_size() - 1)) >= this.cols) {
                 return -1;
             } else {
+
+                // checks if the boat would intersect with any other boat, fails if so
                 Square[] loc = new Square[boat.get_size()];
                 for (int i = 0; i < loc.length; i++) {
                     if (this.grid[row][col+1].get_state() == 'B') {
                         return -1;
                     }
                 }
+
+                /**************************************************
+                    will only get here if the boat can be placed
+                    sets each element of the location array of the 
+                    boat to each of the squares that the boat will
+                    occupy on the grid
+                **************************************************/
                 for (int i = 0; i < loc.length; i++) {
                     loc[i] = this.grid[row][col+i];
                     this.grid[row][col+i].set_state('B');
                 }
+
+                // sets the location array of boat as well as the orientation
                 boat.set_loc(loc);
                 boat.set_orient('H');
             }
         }
+        // success
         return 0;
     } // place_boat
 
@@ -202,6 +259,11 @@ public class Grid {
             }
             returnString += "\n";
         }
+
+        /***********************************************************
+            prints out the constructed board as well as which turn 
+            the game is on and the ships that are left/have been sunk
+        ***********************************************************/
         System.out.println(returnString);
         System.out.printf("Turn %d\n", this.turns);
         System.out.printf("Ships Remaining: %d\n", this.shipsLeft);
