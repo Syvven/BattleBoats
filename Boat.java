@@ -35,10 +35,10 @@ public class Boat {
     public void set_sunk(boolean sunk) { this.sunk = sunk; }
 
     /***********************************************************************
-        toString:
-            The purpose of this toString is to determine which type of boat
-            the specific boat object refers to. This is determined based on the
-            size of the boat object. 
+        Display:
+            The purpose of this method is to determine which type of boat
+            the specific boat object refers to, then print it
+            This is determined based on the size of the boat object. 
         match size with 
         1 -> raft (* ixj grids where i or j == 3* ) 
         2 -> patrol boat (* ixj grids where i or j >= 3 *)
@@ -47,7 +47,7 @@ public class Boat {
         5 -> Carrier (* ixj grids where i or j >= 6 *)
         6 -> Oil Tanker (* ixj grids where i or j > 10 *)
     ************************************************************************/
-    public String toString() {
+    public void display() {
         String retString = "";
 
         // matches size with 1 - 6 and adds the corresponding boat name to the 
@@ -71,7 +71,7 @@ public class Boat {
         
         // adds the location data as well as state to the return string as long as 
         // the boat is properly sized
-        /*if (retString.compareTo("This boat does not exist.") != 0) {
+        if (retString.compareTo("This boat does not exist.") != 0) {
             retString += " Coordinates: ";
             for (int i = 0; i < this.loc.length; i++) {
                 retString += String.format("(%d, %d, %c)", 
@@ -79,8 +79,31 @@ public class Boat {
                                 this.loc[i].get_col(), 
                                 this.loc[i].get_state());
             }   
-        }*/
+        }
+        System.out.println(retString);
+    } // display
 
+    // prints only the name of the boat
+    public String toString() {
+        String retString = "";
+        // matches size with 1 - 6 and adds the corresponding boat name to the 
+        // return string. If the boat is improperly sized, a proper message is returned.
+        switch (this.size) {
+            case 1: retString += "Raft";
+                    break;
+            case 2: retString += "Patrol Boat";
+                    break;
+            case 3: retString += "Submarine";
+                    break;
+            case 4: retString += "Battleship";
+                    break;
+            case 5: retString += "Carrier";
+                    break;
+            case 6: retString += "Oil Tanker";
+                    break;
+            default: retString += "This boat does not exist.";
+                    break;
+        }
         return retString;
-    } // toString
+    }
 } // Boat

@@ -13,11 +13,13 @@ public class Game {
     private int players;
     private int rows;
     private int cols;
+    private Scanner s;
 
-    public Game(int players, int rows, int cols) {
+    public Game(int players, int rows, int cols, Scanner s) {
         this.players = players;
         this.rows = rows;
         this.cols = cols;
+        this.s = s;
     }
 
     // starts a game based on how many players there will be
@@ -30,25 +32,26 @@ public class Game {
     }
 
     // sets up the game for when there is a single player playing against an AI
-    public void single_player(int rows, int cols) {
-        Grid playerAI = new Grid(rows, cols);
-        Grid player1 = new Grid(rows, cols);
+    private void single_player(int rows, int cols) {
+        Grid playerAI = new Grid(rows, cols, this.s, "Player AI");
+        Grid player1 = new Grid(rows, cols, this.s, "Player 1");
         
         // places boats for the AI and prompts the player to place their own boats
         playerAI.place_boats_AI();
         player1.place_boats_player();
 
-        System.out.println(playerAI);
-        System.out.println(player1);
-        playerAI.display();
 
     } // single_player
 
     // sets up the game for when there are two players playing against each other
 
-    public void multi_player(int rows, int cols) {
-        Grid player1 = new Grid(rows, cols);
-        Grid player2 = new Grid(rows, cols);
+    private void multi_player(int rows, int cols) {
+        Grid player1 = new Grid(rows, cols, this.s, "Player 1");
+        Grid player2 = new Grid(rows, cols, this.s, "Player 2");
+
+        // prompts both users to place their boats
+        player1.place_boats_player();   
+        player2.place_boats_player();
     } // multi_player
 
 
@@ -167,14 +170,14 @@ public class Game {
                 valid = false;
             }
         }
-        s.close();
 
         // reiterates, to the user, game information, creates the game object, and starts the game.
-        Game game = new Game(players, rows, cols);
+        Game game = new Game(players, rows, cols, s);
         System.out.println("\nGame Starting!");
         System.out.printf("Mode: %s\n", mode);
         System.out.printf("Players: %d\n", players);
         System.out.printf("Board Size: %d x %d\n\n", rows, cols);
         game.start_game();
+        s.close();
     } // main
 } // Game
