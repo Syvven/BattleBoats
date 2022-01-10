@@ -10,7 +10,13 @@ Game of Battleship
         -> Powerup includes powerups meant to make the game more interesting.
     -> Powerups:
         -> None implemented yet but there are ideas.
-        -> 
+        -> Decoy Ship
+        -> Move: move a ship slightly but only if it has been damaged.
+        -> MultiShot: allows you to attack multiple times in a turn.
+        -> Radar Bomb: see ships in an area.
+        -> Possibly Super Moves?
+            -> Torpedo: goes down a row/col until it hits a ship or goes out of bounds.
+            -> Airstrike: guaranteed ship hit, prioritizes decoy ships.
     -> AI algorithm:
         -> Gives each square on the grid and evaluation based on the state of the board.
         -> At the start of the game, each square will have the same evaluation.
