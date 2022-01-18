@@ -1,7 +1,6 @@
 // Grid
 // Written by Noah Hendrickson
 
-import java.lang.Math;
 import java.util.Scanner;
 
 // implemented as a 2d array of cells that contain information about game state
@@ -152,6 +151,7 @@ public class Grid {
             restarts. Tracking variable checks when the last boat
             has been placed and terminates the loop if it has.
         ***************************************************************/
+        System.out.println("\n" + toString());
         while (numBoat != 0) {
             // sets the current boat being placed
             Boat curBoat = this.boats[numBoat-1];
@@ -163,7 +163,7 @@ public class Grid {
                 user is prompted to enter it again.
             ************************************************************/
             valid = true;
-            System.out.printf("\nPlacing %s (Size %d)\n", curBoat, curBoat.get_size());
+            System.out.printf("Placing %s (Size %d)\n", curBoat, curBoat.get_size());
             System.out.print("Orientation ('V' for vertical, 'H' for horizontal): ");
             while (valid) {
                 whole = s.nextLine();
@@ -280,7 +280,13 @@ public class Grid {
             int success = place_boat(curBoat, row, col, orient);
             if (success == 0) {
                 numBoat -= 1;
-                System.out.printf("AI %s has been placed.\n", curBoat);
+                try {
+                    Thread.sleep(2000);
+                } catch (Exception e) {
+
+                }
+                
+                System.out.printf("AI %s has been placed.%n", curBoat);
             }
         }
         System.out.println("\nAI has placed all its Boats\n");
@@ -376,18 +382,14 @@ public class Grid {
             for (int j = -1; j < this.cols; j++) {
                 if (i == -1 && j == -1) {
                     returnString += "    ";
+                } else if (j == -1 && i >= 10) {
+                    returnString += i + "  ";
                 } else if (j == -1) {
-                    if (i >= 10) {
-                        returnString += i + "  ";
-                    } else {
-                        returnString += " " + i + "  ";
-                    }
+                    returnString += " " + i + "  ";
+                } else if (i == -1 && j >= 10) {
+                    returnString += j + "  ";
                 } else if (i == -1) {
-                    if (j >= 10) {
-                        returnString += j + "  ";
-                    } else {
-                        returnString += j + "   ";
-                    }
+                    returnString += j + "   ";
                 } else {
                     char state = this.grid[i][j].get_state();
                     if (state == 'X' || state == '-' || state == 'O') {
@@ -414,12 +416,21 @@ public class Grid {
     public void set_ships_sunk() {
         int counter = 0;
         for (int i = 0; i < this.boats.length; i++) {
+            this.boats[i].set_sunk();
             if (this.boats[i].get_sunk()) {
                 counter++;
             }
         }
         this.shipsSunk = counter;
     } // set_ships_sunk
+
+    public boolean check_win() {
+        set_ships_sunk();
+        if (shipsLeft == 0) {
+
+        }
+        return true;
+    }
 
     // getters
     public Boat[] get_boats() { return this.boats; }
@@ -435,18 +446,14 @@ public class Grid {
             for (int j = -1; j < this.cols; j++) {
                 if (i == -1 && j == -1) {
                     returnString += "    ";
+                } else if (j == -1 && i >= 10) {
+                    returnString += i + "  ";
                 } else if (j == -1) {
-                    if (i >= 10) {
-                        returnString += i + "  ";
-                    } else {
-                        returnString += " " + i + "  ";
-                    }
+                    returnString += " " + i + "  ";
+                } else if (i == -1 && j >= 10) {
+                    returnString += j + "  ";
                 } else if (i == -1) {
-                    if (j >= 10) {
-                        returnString += j + "  ";
-                    } else {
-                        returnString += j + "   ";
-                    }
+                    returnString += j + "   ";
                 } else {
                     returnString += this.grid[i][j].get_state() + "   ";
                 }

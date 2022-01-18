@@ -7,11 +7,16 @@
     determines, if it has a ship in it, whether the ship has been
     hit or not, and if it does not have a ship, whether or not that
     square has been fired upon
+    States for squares include: 
+        -> B: A boat occupies this square
+        -> X: A boat occupying this square has been hit
+        -> -: A square with no boat has been hit
+        -> ~: Default state for each square 
 *******************************************************************/
 public class Square {
-    public int row;
-    public int col;
-    public char state;
+    private int row;
+    private int col;
+    private char state;
 
     // constructor
     public Square(int row, int col, char state) {

@@ -10,6 +10,7 @@ public class Boat {
     private char orient;
     private Square[] loc;
     private boolean sunk;
+    private String noExist = "This boat does not exist.";
 
     // constructor
     public Boat(int size) {
@@ -32,7 +33,14 @@ public class Boat {
 
     // getters/setters for sunk state
     public boolean get_sunk() { return this.sunk; }
-    public void set_sunk(boolean sunk) { this.sunk = sunk; }
+    public void set_sunk() { 
+        for (int i = 0; i < loc.length; i++) {
+            if (loc[i].get_state() == 'B') {
+                this.sunk = false;
+            }
+        }
+        this.sunk = true;
+    }
 
     /***********************************************************************
         Display:
@@ -65,13 +73,13 @@ public class Boat {
                     break;
             case 6: retString += "Oil Tanker";
                     break;
-            default: retString += "This boat does not exist.";
+            default: retString += noExist;
                     break;
         }
         
         // adds the location data as well as state to the return string as long as 
         // the boat is properly sized
-        if (retString.compareTo("This boat does not exist.") != 0) {
+        if (retString.compareTo(noExist) != 0) {
             retString += " Coordinates: ";
             for (int i = 0; i < this.loc.length; i++) {
                 retString += String.format("(%d, %d, %c)", 
@@ -101,7 +109,7 @@ public class Boat {
                     break;
             case 6: retString += "Oil Tanker";
                     break;
-            default: retString += "This boat does not exist.";
+            default: retString += noExist;
                     break;
         }
         return retString;

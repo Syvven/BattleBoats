@@ -33,12 +33,18 @@ public class Game {
 
     // sets up the game for when there is a single player playing against an AI
     private void single_player(int rows, int cols) {
+        boolean game_over = false;
+
+        // initializes each player's game grid
         Grid playerAI = new Grid(rows, cols, this.s, "Player AI");
         Grid player1 = new Grid(rows, cols, this.s, "Player 1");
         
         // places boats for the AI and prompts the player to place their own boats
         playerAI.place_boats_AI();
         player1.place_boats_player();
+
+        System.out.println("\nGame Starting!\n");
+
 
 
     } // single_player
