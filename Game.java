@@ -45,12 +45,9 @@ public class Game {
 
         System.out.println("\nGame Starting!\n");
 
-
-
     } // single_player
 
     // sets up the game for when there are two players playing against each other
-
     private void multi_player(int rows, int cols) {
         Grid player1 = new Grid(rows, cols, this.s, "Player 1");
         Grid player2 = new Grid(rows, cols, this.s, "Player 2");
@@ -166,11 +163,11 @@ public class Game {
                 System.out.println("Please enter \"Classic\" for classic mode, \"Powerup\" for powerup mode, or \"help\" for more info: ");
                 mode = s.nextLine();
             } else if (mode.compareTo("help") == 0) {
-                System.out.println();
-                System.out.println("Classic Mode: Basic Battleship. No power ups can be used. Each player gets one shot per turn.");
-                System.out.println("Powerup Mode: Battleship but with powerups. A variety of powerups will be at your disposal with limited uses.");
-                System.out.println("  Powerups Available:");
-                System.out.println("  -> Yet To Be Implemented\n");
+                String printString = "\nClassic Mode: Basic Battleship. No power ups can be used. Each player gets one shot per turn.\n" +
+                                     "Powerup Mode: Battleship but with powerups. A variety of powerups will be at your disposal with limited uses.\n" +
+                                     "Powerups Available:\n" +
+                                     "  -> Yet To Be Implemented\n";
+                System.out.println(printString);
                 System.out.print("Enter \"Classic\" for classic mode or \"Powerup\" for powerup mode: ");
             } else {
                 valid = false;
