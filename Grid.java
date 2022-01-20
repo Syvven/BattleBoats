@@ -373,7 +373,15 @@ public class Grid {
         return 0;
     } // place_boat
 
-    public void fire(int row, int col) {} // fire
+    public boolean fire(int row, int col) {
+        if (this.grid[row][col].get_state() == 'B') {
+            this.grid[row][col].set_state('X');
+            return true;
+        } else {
+            this.grid[row][col].set_state('-');
+            return false;
+        }
+    } // fire
 
     // displays the gameboard with the relevant information visible
     public void display() {
@@ -413,30 +421,36 @@ public class Grid {
     } // display
 
     // sets how many ships have been sunk by checking the state of each
-    public void set_boats_sunk() {
-        int counter = 0;
+    // returns true if a boat was sunk and false otherwise
+    public Boat check_sink() {
+        // loops through the boat array and checks how many have been sunk
         for (int i = 0; i < this.boats.length; i++) {
-            this.boats[i].set_sunk();
-            if (this.boats[i].get_sunk()) {
-                counter++;
+            // checks if boat is not already sunk
+            if (!this.boats[i].get_sunk()) {
+                // sets boat sunk
+                this.boats[i].set_sunk();
+                // checks to see if boat was sunk after the fire
+                if (this.boats[i].get_sunk()) {
+                    // updates tracker variables and returns which boat was sunk
+                    this.boatsSunk++;
+                    this.boatsLeft++;
+                    return this.boats[i];
+                }
             }
         }
-        this.boatsSunk = counter;
-    } // set_ships_sunk
+        return null;
+    } // check_sink
 
     public boolean check_win() {
-        set_boats_sunk();
-        if (this.boatsLeft == 0) {
-
-        }
-        return true;
-    }
+        // sets the proper ships sunk and left and checks for win
+        return (this.boatsLeft != 0);
+    } // check_win
 
     // getters
     public Boat[] get_boats() { return this.boats; }
     public int get_shots() { return this.shots; }
     public int get_turns() { return this.turns; }
-    public int get_boatsLeft() { return this.boatsLeft; }
+    public Square[][] get_grid() { return this.grid; }
 
     // toString to print the board in a readable fashion
     // each row and column is numbered from 0 to 1

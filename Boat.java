@@ -37,6 +37,7 @@ public class Boat {
         for (int i = 0; i < loc.length; i++) {
             if (loc[i].get_state() == 'B') {
                 this.sunk = false;
+                return;
             }
         }
         this.sunk = true;
