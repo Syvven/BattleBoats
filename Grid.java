@@ -12,8 +12,8 @@ public class Grid {
     private int cols;
     private int shots;
     private int turns;
-    private int shipsLeft;
-    private int shipsSunk;
+    private int boatsLeft;
+    private int boatsSunk;
     private Scanner s;
     private String playerName;
 
@@ -30,8 +30,8 @@ public class Grid {
 
         this.turns = 0;
         this.shots = 0;
-        this.shipsSunk = 0;
-        this.shipsLeft = this.boats.length;
+        this.boatsSunk = 0;
+        this.boatsLeft = this.boats.length;
     } // Constructor
 
     // helper to fill the grid with squares all set to '-'
@@ -408,12 +408,12 @@ public class Grid {
         ***********************************************************/
         System.out.println(returnString);
         System.out.printf("Turn %d\n", this.turns);
-        System.out.printf("Ships Remaining: %d\n", this.shipsLeft);
-        System.out.printf("Ships Sunk: %d\n", this.shipsSunk);
+        System.out.printf("Ships Remaining: %d\n", this.boatsLeft);
+        System.out.printf("Ships Sunk: %d\n", this.boatsSunk);
     } // display
 
     // sets how many ships have been sunk by checking the state of each
-    public void set_ships_sunk() {
+    public void set_boats_sunk() {
         int counter = 0;
         for (int i = 0; i < this.boats.length; i++) {
             this.boats[i].set_sunk();
@@ -421,12 +421,12 @@ public class Grid {
                 counter++;
             }
         }
-        this.shipsSunk = counter;
+        this.boatsSunk = counter;
     } // set_ships_sunk
 
     public boolean check_win() {
-        set_ships_sunk();
-        if (shipsLeft == 0) {
+        set_boats_sunk();
+        if (this.boatsLeft == 0) {
 
         }
         return true;
@@ -436,7 +436,7 @@ public class Grid {
     public Boat[] get_boats() { return this.boats; }
     public int get_shots() { return this.shots; }
     public int get_turns() { return this.turns; }
-    public int get_shipsLeft() { return this.shipsLeft; }
+    public int get_boatsLeft() { return this.boatsLeft; }
 
     // toString to print the board in a readable fashion
     // each row and column is numbered from 0 to 1
