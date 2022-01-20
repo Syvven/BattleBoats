@@ -433,7 +433,7 @@ public class Grid {
                 if (this.boats[i].get_sunk()) {
                     // updates tracker variables and returns which boat was sunk
                     this.boatsSunk++;
-                    this.boatsLeft++;
+                    this.boatsLeft--;
                     return this.boats[i];
                 }
             }
@@ -443,7 +443,7 @@ public class Grid {
 
     public boolean check_win() {
         // sets the proper ships sunk and left and checks for win
-        return (this.boatsLeft != 0);
+        return (this.boatsLeft == 0);
     } // check_win
 
     // getters

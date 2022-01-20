@@ -58,6 +58,7 @@ public class Game {
             // inverts whose turn it is
             player1Turn = !player1Turn;
             playerAITurn = !playerAITurn;
+
             
             // checks for whose turn it is and executes accordingly
             if (player1Turn) {
@@ -68,6 +69,7 @@ public class Game {
                 System.out.println("\nWhere would you like to fire?");
                 System.out.print("Row: ");
 
+                spot_clear = false;
                 while (!spot_clear) {
                     // prompts the user to enter a row and handles that accordingly
                     valid = false;
@@ -116,13 +118,13 @@ public class Game {
                 if (hit) {
                     sink = playerAI.check_sink();
                     if (sink != null) {
-                        System.out.println("Hit!");
-                        System.out.println("Enemy " + sink + " sunk!");
+                        System.out.println("\nHit!");
+                        System.out.println("Enemy " + sink + " Sunk!\n");
                     } else {
-                        System.out.println("Hit!");
+                        System.out.println("Hit!\n");
                     }   
                 } else {
-                    System.out.println("Miss!");
+                    System.out.println("Miss!\n");
                 }
                 
                 game_over = playerAI.check_win();
