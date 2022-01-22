@@ -124,7 +124,7 @@ public class Grid {
             the boat placement. User inputs either help or cont and
             anything else will prompt the user to input again.
         ******************************************************************/
-        System.out.println("Player 1, Please Specify Where to Place Your Boats.");
+        System.out.println("\n" + this.playerName + " Please Specify Where to Place Your Boats.");
         System.out.print("If you would like information on how to place boats, input \"help\", otherwise, input \"cont\": ");
         while (valid) {
             action = this.s.nextLine();
@@ -281,9 +281,9 @@ public class Grid {
             if (success == 0) {
                 numBoat -= 1;
                 try {
-                    Thread.sleep(2000);
+                    Thread.sleep(1000);
                 } catch (Exception e) {
-
+                    e.printStackTrace();
                 }
                 
                 System.out.printf("AI %s has been placed.%n", curBoat);
@@ -451,6 +451,7 @@ public class Grid {
     public int get_shots() { return this.shots; }
     public int get_turns() { return this.turns; }
     public Square[][] get_grid() { return this.grid; }
+    public void inc_turns() { this.turns++; }
 
     // toString to print the board in a readable fashion
     // each row and column is numbered from 0 to 1
