@@ -46,7 +46,7 @@ public class Game {
                 }
             }
         }
-    }
+    } // start_game
 
     // sets up the game for when there is a single player playing against an AI
     private void single_player(int rows, int cols) {
@@ -78,12 +78,18 @@ public class Game {
             player1Turn = !player1Turn;
             playerAITurn = !playerAITurn;
 
+            // pauses for a second for a more natural flow
+            try {
+                Thread.sleep(1000);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
             
             // checks for whose turn it is and executes accordingly
             if (player1Turn) {
                 playerAI.inc_turns();
                 // displays the enemy's board in order for the player to fire upon
-                System.out.println("Player1's Turn:\n");
+                System.out.println("\nPlayer1's Turn:\n");
                 playerAI.display();
                 System.out.println("\nWhere would you like to fire?");
 
@@ -148,10 +154,10 @@ public class Game {
                         System.out.println("\nHit!");
                         System.out.println("Enemy " + sink + " Sunk!\n");
                     } else {
-                        System.out.println("Hit!\n");
+                        System.out.println("\nHit!\n");
                     }   
                 } else {
-                    System.out.println("Miss!\n");
+                    System.out.println("\nMiss!\n");
                 }
                 
                 // last thing the loop does is check for win and if it wins the loops terminates
@@ -165,6 +171,34 @@ public class Game {
                 player1.inc_turns();
                 System.out.println("PlayerAI's Turn:\n");
                 player1.display();
+
+                System.out.println("\nAI is Choosing a Coordinate to Fire on...");
+                try {
+                    Thread.sleep(1000);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+                int[] coords = playerAI.eval_enemy_grid(player1);
+                playerAI.display_AI_eval();
+                System.out.printf("AI Fired On Square at (%d, %d)!", coords[0], coords[1]);
+                
+                // initiates the fire if the spot is valid
+                hit = player1.fire(coords[0], coords[1]);
+                // checks if the shot hit
+                if (hit) { 
+                    // checks if a boat was sunk with the shot
+                    sink = player1.check_sink();
+                    if (sink != null) {
+                        System.out.println("\nHit!");
+                        System.out.println("Player 1's " + sink + " Sunk!\n");
+                    } else {
+                        System.out.println("\nHit!\n");
+                    }   
+                } else {
+                    System.out.println("\nMiss!\n");
+                }
+
                 game_over = player1.check_win();
 
                 if (game_over) {

@@ -26,3 +26,9 @@ Game of Battleship
            higher evaluation.
         -> The AI will choose to fire upon the highest evaluated square.
         -> If two or more squares have the same evaluation, the AI will choose one at random.
+        -> Evaluations include:
+            0 -> this spot has already been guessed
+            1 -> default score for any point where no info is known
+            2 -> there is a single X within two squares in any direction
+            3 -> there are two consecutive X's in any directions
+            4 -> the square is adjacent to two X's along either or both axes

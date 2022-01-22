@@ -2,6 +2,7 @@
 // Written by Noah Hendrickson
 
 import java.util.Scanner;
+import java.util.Random;
 
 // implemented as a 2d array of cells that contain information about game state
 public class Grid {
@@ -16,6 +17,7 @@ public class Grid {
     private int boatsSunk;
     private Scanner s;
     private String playerName;
+    private int weightGrid[][];
 
     // Constructor
     public Grid(int rows, int cols, Scanner s, String playerName) {
@@ -32,6 +34,9 @@ public class Grid {
         this.shots = 0;
         this.boatsSunk = 0;
         this.boatsLeft = this.boats.length;
+        if (this.playerName.compareTo("Player AI") == 0) {
+            AI_init_weight_grid();
+        }
     } // Constructor
 
     // helper to fill the grid with squares all set to '-'
@@ -400,7 +405,7 @@ public class Grid {
                     returnString += j + "   ";
                 } else {
                     char state = this.grid[i][j].get_state();
-                    if (state == 'X' || state == '-' || state == 'O') {
+                    if (state == 'X' || state == '-' || state == 'O' || state == 'S') {
                         returnString += state + "   ";
                     } else {
                         returnString += "?   ";
@@ -434,6 +439,10 @@ public class Grid {
                     // updates tracker variables and returns which boat was sunk
                     this.boatsSunk++;
                     this.boatsLeft--;
+                    Square[] boat_loc = this.boats[i].get_loc();
+                    for (int j = 0; j < boat_loc.length; j++) {
+                        boat_loc[j].set_state('S');
+                    }
                     return this.boats[i];
                 }
             }
@@ -446,12 +455,161 @@ public class Grid {
         return (this.boatsLeft == 0);
     } // check_win
 
+    public void AI_init_weight_grid() {
+        this.weightGrid = new int[this.rows][this.cols];
+        for (int i = 0; i < this.rows; i++) {
+            for (int j = 0; j < this.cols; j++) {
+                this.weightGrid[i][j] = 1;
+            }
+        }
+    }
+
+    public int[] choose_rand(Square[] coords, int num) {
+        Random rand = new Random();
+        int rand_int = rand.nextInt(num);
+        Square rand_square = coords[rand_int];
+        int[] ret_coord = {rand_square.get_row(), rand_square.get_col()};
+        return ret_coord;
+    }
+
+    /**********************************************************************************
+        evaluates the board and gives a score based on what the grid state is like
+        0 -> this spot has already been guessed
+        1 -> default score for any point where no info is known
+        2 -> there is a single X within two squares in any direction
+        3 -> there are two consecutive X's in any directions
+        4 -> the square is adjacent to two X's along either or both axes
+    **********************************************************************************/
+    public int[] eval_enemy_grid(Grid enemy) {
+        char state, JPlus1, JPlus2, IPlus1, IPlus2; 
+        char JMinus1, JMinus2, IMinus1, IMinus2;
+        int max = 1;
+        int counter = 0;
+        Square[][] enemy_grid = enemy.get_grid();
+        Square[] temp_coords = new Square[this.rows * this.cols];
+        Square[] possible_coords;
+        
+
+        for (int i = 0; i < this.rows; i++) {
+            for (int j = 0; j < this.cols; j++) {
+                state = enemy.get_grid()[i][j].get_state();
+                try {JPlus1 = enemy_grid[i][j+1].get_state(); } catch (Exception e) {JPlus1 = ' '; }
+                try {JPlus2 = enemy_grid[i][j+2].get_state(); } catch (Exception e) {JPlus2 = ' '; }
+                try {IPlus1 = enemy_grid[i+1][j].get_state(); } catch (Exception e) {IPlus1 = ' '; }
+                try {IPlus2 = enemy_grid[i+2][j].get_state(); } catch (Exception e) {IPlus2 = ' '; }
+                try {JMinus1 = enemy_grid[i][j-1].get_state(); } catch (Exception e) {JMinus1 = ' '; }
+                try {JMinus2 = enemy_grid[i][j-2].get_state(); } catch (Exception e) {JMinus2 = ' '; }
+                try {IMinus1 = enemy_grid[i-1][j].get_state(); } catch (Exception e) {IMinus1 = ' '; }
+                try {IMinus2 = enemy_grid[i-2][j].get_state(); } catch (Exception e) {IMinus2 = ' '; }
+
+                if (state != 'X' && state != 'S' && state != '-') {
+                    if ((i + 1) < this.rows && (i-1) >= 0 && IPlus1 == 'X' && IMinus1 == 'X') {
+                        this.weightGrid[i][j] = 4;
+                        max = 4;
+                        continue;
+                    }
+        
+                    if ((j+1) < this.cols && (j-1) >= 0 && JPlus1 == 'X' && JMinus1 == 'X') {
+                        this.weightGrid[i][j] = 4;
+                        max = 4;
+                        continue;
+                    }
+        
+                    if ((j+2) < this.cols && JPlus1 == 'X' && JPlus2 == 'X') {
+                        this.weightGrid[i][j] = 3;
+                        if (max < 3) {
+                            max = 3;
+                        }
+                        continue;
+                    }
+        
+                    if ((j-2) >= 0 && JMinus1 == 'X' && JMinus2 == 'X') {
+                        this.weightGrid[i][j] = 3;
+                        if (max < 3) {
+                            max = 3;
+                        }
+                        continue;
+                    }
+        
+                    if ((i+2) < this.rows && IPlus1 == 'X' && IPlus2 == 'X') {
+                        this.weightGrid[i][j] = 3;
+                        if (max < 3) {
+                            max = 3;
+                        }
+                        continue;
+                    }
+        
+                    if ((i-2) >= 0 && IMinus1 == 'X' && IMinus2 == 'X') {
+                        this.weightGrid[i][j] = 3;
+                        if (max < 3) {
+                            max = 3;
+                        }
+                        continue;
+                    }
+        
+                    if (((i-1) >= 0 && IMinus1 == 'X') || ((i+1) < this.rows && IPlus1 == 'X') ||
+                        ((j-1) >= 0 && JMinus1 == 'X') || ((j+1) < this.cols && JPlus1 == 'X')) {
+                            this.weightGrid[i][j] = 2;
+                            if (max < 2) {
+                                max = 2;
+                            }
+                            continue;
+                    }
+
+                    this.weightGrid[i][j] = 1;
+
+                } else {
+                    this.weightGrid[i][j] = 0;
+                }
+            }
+        }
+
+        for (int i = 0; i < this.rows; i++) {
+            for (int j = 0; j < this.cols; j++) {
+                if (this.weightGrid[i][j] == max) {
+                    temp_coords[counter] = enemy_grid[i][j];
+                    counter++;
+                }
+            }
+        }
+
+        possible_coords = new Square[counter];
+        for (int i = 0; i < counter; i++) {
+            possible_coords[i] = temp_coords[i];
+        }
+
+        return choose_rand(possible_coords, counter);
+    }
+
     // getters
     public Boat[] get_boats() { return this.boats; }
     public int get_shots() { return this.shots; }
     public int get_turns() { return this.turns; }
     public Square[][] get_grid() { return this.grid; }
     public void inc_turns() { this.turns++; }
+
+    public void display_AI_eval() {
+        String returnString = "Evaluations Board:\n";
+        for (int i = -1; i < this.rows; i++) {
+            for (int j = -1; j < this.cols; j++) {
+                if (i == -1 && j == -1) {
+                    returnString += "    ";
+                } else if (j == -1 && i >= 10) {
+                    returnString += i + "  ";
+                } else if (j == -1) {
+                    returnString += " " + i + "  ";
+                } else if (i == -1 && j >= 10) {
+                    returnString += j + "  ";
+                } else if (i == -1) {
+                    returnString += j + "   ";
+                } else {
+                    returnString += this.weightGrid[i][j] + "   ";
+                }
+            }
+            returnString += "\n";
+        }
+        System.out.println(returnString);
+    }
 
     // toString to print the board in a readable fashion
     // each row and column is numbered from 0 to 1

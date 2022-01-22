@@ -20,19 +20,19 @@ public class Boat {
     }
 
     // getters/setters for size
-    public int get_size() { return this.size; }
-    public void set_size(int size) { this.size = size; }
+    public int get_size() { return this.size; } // get_size
+    public void set_size(int size) { this.size = size; } // set_size
 
     // getters/setters for orientation
-    public char get_orient() { return this.orient; }
-    public void set_orient(char orient) { this.orient = orient; }
+    public char get_orient() { return this.orient; } // get_orient
+    public void set_orient(char orient) { this.orient = orient; } // set_orient
 
     // getters/setters for loc
-    public Square[] get_loc() { return this.loc; }
-    public void set_loc(Square[] loc) { this.loc = loc; }
+    public Square[] get_loc() { return this.loc; } // get_loc
+    public void set_loc(Square[] loc) { this.loc = loc; } // set_loc
 
     // getters/setters for sunk state
-    public boolean get_sunk() { return this.sunk; }
+    public boolean get_sunk() { return this.sunk; } // get_sunk
     public void set_sunk() { 
         for (int i = 0; i < loc.length; i++) {
             if (loc[i].get_state() == 'B') {
@@ -41,7 +41,7 @@ public class Boat {
             }
         }
         this.sunk = true;
-    }
+    } // set_sunk
 
     /***********************************************************************
         Display:
@@ -114,5 +114,5 @@ public class Boat {
                     break;
         }
         return retString;
-    }
+    } // toString
 } // Boat

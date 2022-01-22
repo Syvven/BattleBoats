@@ -23,32 +23,32 @@ public class Square {
         this.row = row;
         this.col = col;
         this.state = state;
-    }
+    } 
 
     // getters and setters for row
     public void set_row(int row) {
         this.row = row;
-    }
+    } // set_row
 
     public int get_row() {
         return this.row;
-    }
+    } // get_row
 
     // getters and setters for column
     public void set_col(int col) {
         this.col = col;
-    }
+    } // set_col
 
     public int get_col() {
         return this.col;
-    }
+    } // get_col
     
     // getters and setters for state
     public void set_state(char state) {
         this.state = state;
-    }
+    } // set_state
 
     public char get_state() {
         return this.state;
-    }
+    } // get_state
 } // Square
