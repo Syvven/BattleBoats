@@ -500,18 +500,18 @@ public class Game {
             user is asked for input again.
         ******************************************************************/
         valid = true;
-        System.out.println("Please input board dimensions. (rows x columns where 3 <= rows, columns <= 15)");
+        System.out.println("Please input board dimensions. (rows x columns where 4 <= rows, columns <= 50)");
         while(valid) {
             try {
                 System.out.print("Rows: ");
                 rows = s.nextInt();
-                if (rows < 3 || rows > 15) {
-                    System.out.println("Please input an integer between 3 and 15 for rows");
+                if (rows < 4 || rows > 50) {
+                    System.out.println("Please input an integer between 4 and 50 for rows");
                 } else {
                     valid = false;
                 }
             } catch (Exception e) {
-                System.out.println("Please input an integer between 3 and 15 for rows");
+                System.out.println("Please input an integer between 4 and 50 for rows");
                 s.nextLine();
             }
         }
@@ -521,13 +521,13 @@ public class Game {
             try {
                 System.out.print("Columns: ");
                 cols = s.nextInt();
-                if (cols < 3 || cols > 15) {
-                    System.out.println("Please input an integer between 3 and 15 for rows");
+                if (cols < 4 || cols > 50) {
+                    System.out.println("Please input an integer between 4 and 50 for rows");
                 } else {
                     valid = false;
                 }
             } catch (Exception e) {
-                System.out.println("Please input an integer between 3 and 15 for columns");
+                System.out.println("Please input an integer between 4 and 50 for columns");
                 s.nextLine();
             }
         }

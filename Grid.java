@@ -17,7 +17,7 @@ public class Grid {
     private int boatsSunk;
     private Scanner s;
     private String playerName;
-    private int weightGrid[][];
+    private int[][] weightGrid;
 
     // Constructor
     public Grid(int rows, int cols, Scanner s, String playerName) {
@@ -54,16 +54,11 @@ public class Grid {
         int min = Math.min(this.rows, this.cols);
 
         // 2 boats generated if 3 rows or 3 columns
-        if (min == 3) {
-            this.boats = new Boat[2];
+        if (min == 4) {
+            this.boats = new Boat[3];
             this.boats[0] = new Boat(1);
             this.boats[1] = new Boat(2);
-
-        // 3 boats generated if 4 rows or 4 columns
-        } else if (min == 4) {
-            this.boats = new Boat[2];
-            this.boats[0] = new Boat(2);
-            this.boats[1] = new Boat(3);
+            this.boats[2] = new Boat(3);
 
         // 3 boats generated if 5 or 6 rows or columns
         } else if (5 <= min && min <= 6) {
@@ -109,7 +104,43 @@ public class Grid {
             this.boats[4] = new Boat(5);
             this.boats[5] = new Boat(6);
             this.boats[6] = new Boat(6);
-        } 
+        } else if (16 <= min && min <= 18) {
+            this.boats = new Boat[8];
+            this.boats[0] = new Boat(2);
+            this.boats[1] = new Boat(3);
+            this.boats[2] = new Boat(3);
+            this.boats[3] = new Boat(4);
+            this.boats[4] = new Boat(5);
+            this.boats[5] = new Boat(6);
+            this.boats[6] = new Boat(6);
+            this.boats[7] = new Boat(6);
+        } else if (19 <= min && min <= 21) {
+            this.boats = new Boat[9];
+            this.boats[0] = new Boat(2);
+            this.boats[1] = new Boat(3);
+            this.boats[2] = new Boat(3);
+            this.boats[3] = new Boat(4);
+            this.boats[4] = new Boat(5);
+            this.boats[5] = new Boat(5);
+            this.boats[6] = new Boat(6);
+            this.boats[7] = new Boat(6);
+            this.boats[8] = new Boat(6);
+        } else if (22 <= min && min <= 24) {
+            this.boats = new Boat[11];
+            this.boats[0] = new Boat(2);
+            this.boats[1] = new Boat(3);
+            this.boats[2] = new Boat(3);
+            this.boats[3] = new Boat(3);
+            this.boats[4] = new Boat(3);
+            this.boats[5] = new Boat(4);
+            this.boats[6] = new Boat(5);
+            this.boats[7] = new Boat(5);
+            this.boats[8] = new Boat(6);
+            this.boats[9] = new Boat(6);
+            this.boats[10] = new Boat(6);
+        } else if (25 <= min && min <= 27) {
+            
+        }
     } // generate_boats
 
     // prompts the player to place their boats
@@ -387,6 +418,66 @@ public class Grid {
             return false;
         }
     } // fire
+
+    public void powerup() {
+
+    }
+
+    /*****************************************************************
+        Radar Bomb:
+            -> takes in a row and column for the middle of the bomb
+            -> hits an area of 3 rows x 4 cols
+            -> returns a number based on how many hitable squares are
+               in the area
+            -> charge time: 5 turns
+    *****************************************************************/
+    public int radar_bomb() {
+        return 0;
+    }
+
+    /****************************************************************
+        Multi Shot:
+            -> prompts the user to fire multiple times rather than
+               just once
+            -> charge time: 5 turns
+    ****************************************************************/
+    public void multi_shot() {
+
+    }
+
+    /***************************************************************
+        Scatter Shot:
+            -> takes in a row and column to scatter shot around
+            -> randomly hits 3 squares within a 5x5 radius of the 
+               input row/column
+            -> charge time: 7 turns
+    ***************************************************************/
+    public void scatter_shot() {
+
+    }
+
+    /**************************************************************
+        Move:
+            -> moves a ship one square in any direction
+            -> ship has to have been hit 
+            -> charge time: 8 turns
+    **************************************************************/
+    public void move_ship() {
+
+    }
+
+    /****************************************************************
+        Decoy:
+            -> Places a decoy ship
+            -> takes up 2 squares
+            -> only one decoy can be placed at a time
+            -> only starts charging once it has been destroyed
+            -> charge time: 5 turns
+            -> if hit by airstrike or torpedo, immediately destoyed
+    ****************************************************************/
+    public void decoy() {
+
+    }
 
     // displays the gameboard with the relevant information visible
     public void display() {

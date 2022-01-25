@@ -9,6 +9,8 @@ Game of Battleship
         -> Classic is classic battleship.
         -> Powerup includes powerups meant to make the game more interesting.
     -> Powerups:
+        -> How Powerups Work: 
+            -> 
         -> None implemented yet but there are ideas.
         -> Decoy Ship
         -> Move: move a ship slightly but only if it has been damaged.
