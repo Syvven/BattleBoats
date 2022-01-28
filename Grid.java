@@ -584,70 +584,57 @@ public class Grid {
         for (int i = 0; i < this.rows; i++) {
             for (int j = 0; j < this.cols; j++) {
                 state = enemy.get_grid()[i][j].get_state();
-                try {JPlus1 = enemy_grid[i][j+1].get_state(); } catch (Exception e) {JPlus1 = ' '; }
-                try {JPlus2 = enemy_grid[i][j+2].get_state(); } catch (Exception e) {JPlus2 = ' '; }
-                try {IPlus1 = enemy_grid[i+1][j].get_state(); } catch (Exception e) {IPlus1 = ' '; }
-                try {IPlus2 = enemy_grid[i+2][j].get_state(); } catch (Exception e) {IPlus2 = ' '; }
-                try {JMinus1 = enemy_grid[i][j-1].get_state(); } catch (Exception e) {JMinus1 = ' '; }
-                try {JMinus2 = enemy_grid[i][j-2].get_state(); } catch (Exception e) {JMinus2 = ' '; }
-                try {IMinus1 = enemy_grid[i-1][j].get_state(); } catch (Exception e) {IMinus1 = ' '; }
-                try {IMinus2 = enemy_grid[i-2][j].get_state(); } catch (Exception e) {IMinus2 = ' '; }
+                try {JPlus1 = enemy_grid[i][j+1].get_state(); } catch (Exception e) { JPlus1 = ' '; }
+                try {JPlus2 = enemy_grid[i][j+2].get_state(); } catch (Exception e) { JPlus2 = ' '; }
+                try {IPlus1 = enemy_grid[i+1][j].get_state(); } catch (Exception e) { IPlus1 = ' '; }
+                try {IPlus2 = enemy_grid[i+2][j].get_state(); } catch (Exception e) { IPlus2 = ' '; }
+                try {JMinus1 = enemy_grid[i][j-1].get_state(); } catch (Exception e) { JMinus1 = ' '; }
+                try {JMinus2 = enemy_grid[i][j-2].get_state(); } catch (Exception e) { JMinus2 = ' '; }
+                try {IMinus1 = enemy_grid[i-1][j].get_state(); } catch (Exception e) { IMinus1 = ' '; }
+                try {IMinus2 = enemy_grid[i-2][j].get_state(); } catch (Exception e) { IMinus2 = ' '; }
 
                 if (state != 'X' && state != 'S' && state != '-') {
                     if ((i + 1) < this.rows && (i-1) >= 0 && IPlus1 == 'X' && IMinus1 == 'X') {
                         this.weightGrid[i][j] = 4;
                         max = 4;
-                        continue;
-                    }
-        
-                    if ((j+1) < this.cols && (j-1) >= 0 && JPlus1 == 'X' && JMinus1 == 'X') {
+
+                    } else if ((j+1) < this.cols && (j-1) >= 0 && JPlus1 == 'X' && JMinus1 == 'X') {
                         this.weightGrid[i][j] = 4;
                         max = 4;
-                        continue;
-                    }
-        
-                    if ((j+2) < this.cols && JPlus1 == 'X' && JPlus2 == 'X') {
+
+                    } else if ((j+2) < this.cols && JPlus1 == 'X' && JPlus2 == 'X') {
                         this.weightGrid[i][j] = 3;
                         if (max < 3) {
                             max = 3;
                         }
-                        continue;
-                    }
-        
-                    if ((j-2) >= 0 && JMinus1 == 'X' && JMinus2 == 'X') {
+
+                    } else if ((j-2) >= 0 && JMinus1 == 'X' && JMinus2 == 'X') {
                         this.weightGrid[i][j] = 3;
                         if (max < 3) {
                             max = 3;
                         }
-                        continue;
-                    }
-        
-                    if ((i+2) < this.rows && IPlus1 == 'X' && IPlus2 == 'X') {
+                    } else if ((i+2) < this.rows && IPlus1 == 'X' && IPlus2 == 'X') {
                         this.weightGrid[i][j] = 3;
                         if (max < 3) {
                             max = 3;
                         }
-                        continue;
-                    }
-        
-                    if ((i-2) >= 0 && IMinus1 == 'X' && IMinus2 == 'X') {
+
+                    } else if ((i-2) >= 0 && IMinus1 == 'X' && IMinus2 == 'X') {
                         this.weightGrid[i][j] = 3;
                         if (max < 3) {
                             max = 3;
                         }
-                        continue;
-                    }
-        
-                    if (((i-1) >= 0 && IMinus1 == 'X') || ((i+1) < this.rows && IPlus1 == 'X') ||
+
+                    } else if (((i-1) >= 0 && IMinus1 == 'X') || ((i+1) < this.rows && IPlus1 == 'X') ||
                         ((j-1) >= 0 && JMinus1 == 'X') || ((j+1) < this.cols && JPlus1 == 'X')) {
                             this.weightGrid[i][j] = 2;
                             if (max < 2) {
                                 max = 2;
                             }
-                            continue;
-                    }
 
-                    this.weightGrid[i][j] = 1;
+                    } else {
+                        this.weightGrid[i][j] = 1;
+                    }
 
                 } else {
                     this.weightGrid[i][j] = 0;
