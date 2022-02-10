@@ -14,12 +14,14 @@ public class Game {
     private int rows;
     private int cols;
     private Scanner s;
+    private boolean powerup;
 
-    public Game(int players, int rows, int cols, Scanner s) {
+    public Game(int players, int rows, int cols, Scanner s, boolean powerup) {
         this.players = players;
         this.rows = rows;
         this.cols = cols;
         this.s = s;
+        this.powerup = powerup;
     }
 
     // starts a game based on how many players there will be
@@ -37,7 +39,12 @@ public class Game {
             while (!valid) {
                 first = this.s.nextLine();
                 if (first.compareTo("player1") == 0 || first.compareTo("player2") == 0) {
-                    multi_player(this.rows, this.cols, first);
+                    if (!this.powerup) {
+                        multi_player(this.rows, this.cols, first);
+                    } else {
+                        powerup_game(this.rows, this.cols, first);
+                    }
+                    
                     valid = true;
                     this.s.nextLine();
                 } else {
@@ -45,6 +52,8 @@ public class Game {
                     System.out.print("\nPlease enter player1 or player2 for who you want to go first: ");
                 }
             }
+        } else if (this.players == 0) {
+            AI_vs_AI(this.rows, this.cols);
         }
     } // start_game
 
@@ -206,6 +215,9 @@ public class Game {
                 }
             }
         }
+
+        System.out.println(player1);
+        System.out.println(playerAI);
 
         // checks who won and prints accordingly
         if (player1Win) {
@@ -428,6 +440,9 @@ public class Game {
                 }
             }
         }
+
+        System.out.println(player1);
+        System.out.println(player2);
         
         // checks who won and prints accordingly
         if (player1Win) {
@@ -444,7 +459,15 @@ public class Game {
         }
     } // multi_player
 
+    // sets up the game for when there are two players playing against each other in powerup mode
+    private void powerup_game(int rows, int cols, String first) {
 
+    }
+
+    // sets up the game for when there are two AI's playing against each other
+    private void AI_vs_AI(int rows, int cols) {
+
+    }
 
 
 
@@ -457,6 +480,7 @@ public class Game {
 
     public static void main(String[] args) {
         // initiates variables needed
+        boolean powerup = false;
         boolean valid = true;
         String mode = "";
         int players = 0;
@@ -473,22 +497,25 @@ public class Game {
                 -> Both boards will display where the boats are. This will rely on 
                    the trust of the users to not look at each other's boards.
         ******************************************************************************/
-        System.out.print("Please enter 1 for Singleplayer or 2 for Multiplayer: ");
+        System.out.print("Please enter 1 for Singleplayer or 2 for Multiplayer or 0 for AI vs AI: ");
         while (valid) {
             try {
                 players = s.nextInt();
-                if (players == 1) {
+                if (players == 0) {
+                    System.out.println("AI vs AI selected");
+                    valid = false;
+                } else if (players == 1) {
                     System.out.println("Singleplayer Selected");
                     valid = false;
                 } else if (players == 2) {
                     System.out.println("Multiplayer Selected");
                     valid = false;
                 } else {
-                    System.out.print("Please input either 1 or 2 players: ");
+                    System.out.print("Please input either 0, 1, or 2 players: ");
                     s.nextLine();
                 }
             } catch (Exception e) {
-                System.out.print("Please input an integer 1 or 2: ");
+                System.out.print("Please input an integer0, 1, or 2: ");
                 s.nextLine();
             }
         }
@@ -539,30 +566,40 @@ public class Game {
             Powerup mode makes use of various powerups (that have yet to be implemented) in addition
             to the rules of normal battleship
         ********************************************************************************************/
-        valid = true;
-        s.nextLine();
-        System.out.println("Would you like to play Classic Mode or Powerup Mode?");
-        System.out.print("(Input help for more info on powerup mode): ");
+        if (players != 0) {
+            valid = true;
+            s.nextLine();
+            System.out.println("Would you like to play Classic Mode or Powerup Mode?");
+            System.out.print("Input \"Classic\" for Classic Mode, \"Powerup\" for Powerup Mode, or \"help\" for more info on powerup mode: ");
 
-        while (valid) {
-            mode = s.nextLine();
-            if (mode.compareTo("Classic") != 0 && mode.compareTo("Powerup") != 0 && mode.compareTo("help") != 0) {
-                System.out.println("Please enter \"Classic\" for classic mode, \"Powerup\" for powerup mode, or \"help\" for more info: ");
+            while (valid) {
                 mode = s.nextLine();
-            } else if (mode.compareTo("help") == 0) {
-                String printString = "\nClassic Mode: Basic Battleship. No power ups can be used. Each player gets one shot per turn.\n" +
-                                     "Powerup Mode: Battleship but with powerups. A variety of powerups will be at your disposal with limited uses.\n" +
-                                     "Powerups Available:\n" +
-                                     "  -> Yet To Be Implemented\n";
-                System.out.println(printString);
-                System.out.print("Enter \"Classic\" for classic mode or \"Powerup\" for powerup mode: ");
-            } else {
-                valid = false;
+                if (mode.compareTo("Classic") != 0 && mode.compareTo("Powerup") != 0 && mode.compareTo("help") != 0) {
+                    System.out.println("Please enter \"Classic\" for classic mode, \"Powerup\" for powerup mode, or \"help\" for more info: ");
+                } else if (mode.compareTo("help") == 0) {
+                    String printString = "\nClassic Mode: Basic Battleship. No power ups can be used. Each player gets one shot per turn.\n" +
+                                        "Powerup Mode: Battleship but with powerups. A variety of powerups will be at your disposal with limited uses.\n" +
+                                        "Powerups Available:\n" +
+                                        "  -> Yet To Be Implemented\n";
+                    System.out.println(printString);
+                    System.out.print("Enter \"Classic\" for classic mode or \"Powerup\" for powerup mode: ");
+                } else if (mode.compareTo("Powerup") == 0) {
+                    powerup = true;
+                    valid = false;
+                } else {
+                    valid = false;
+                }
             }
+        } else {
+            mode = "Classic";
+            String printString = "AI vs AI requires that the game be played in Classic mode." +
+                                 "\nClassic Mode: Basic Battleship. No power ups can be used. Each player gets one shot per turn.\n";
+            System.out.println(printString);
         }
 
         // reiterates, to the user, game information, creates the game object, and starts the game.
-        Game game = new Game(players, rows, cols, s);
+        Game game = new Game(players, rows, cols, s, powerup);
+
         System.out.println("\nGame Starting!");
         System.out.printf("Mode: %s\n", mode);
         System.out.printf("Players: %d\n", players);

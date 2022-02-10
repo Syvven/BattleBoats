@@ -139,7 +139,248 @@ public class Grid {
             this.boats[9] = new Boat(6);
             this.boats[10] = new Boat(6);
         } else if (25 <= min && min <= 27) {
-            
+            this.boats = new Boat[13];
+            this.boats[0] = new Boat(2);
+            this.boats[1] = new Boat(2);
+            this.boats[2] = new Boat(3);
+            this.boats[3] = new Boat(3);
+            this.boats[4] = new Boat(3);
+            this.boats[5] = new Boat(4);
+            this.boats[6] = new Boat(4);
+            this.boats[7] = new Boat(5);
+            this.boats[8] = new Boat(5);
+            this.boats[9] = new Boat(6);
+            this.boats[10] = new Boat(6);
+            this.boats[11] = new Boat(6);
+            this.boats[12] = new Boat(6);
+        } else if (28 <= min && min <= 30) {
+            this.boats = new Boat[16];
+            this.boats[0] = new Boat(2);
+            this.boats[1] = new Boat(2);
+            this.boats[2] = new Boat(3);
+            this.boats[3] = new Boat(3);
+            this.boats[4] = new Boat(3);
+            this.boats[5] = new Boat(4);
+            this.boats[6] = new Boat(4);
+            this.boats[7] = new Boat(5);
+            this.boats[8] = new Boat(5);
+            this.boats[9] = new Boat(6);
+            this.boats[10] = new Boat(6);
+            this.boats[11] = new Boat(6);
+            this.boats[12] = new Boat(6);
+            this.boats[13] = new Boat(6);
+            this.boats[14] = new Boat(6);
+            this.boats[15] = new Boat(6);
+        } else if (31 <= min && min <= 33) {
+            this.boats = new Boat[19];
+            this.boats[0] = new Boat(2);
+            this.boats[1] = new Boat(2);
+            this.boats[2] = new Boat(3);
+            this.boats[3] = new Boat(3);
+            this.boats[4] = new Boat(3);
+            this.boats[5] = new Boat(4);
+            this.boats[6] = new Boat(4);
+            this.boats[7] = new Boat(5);
+            this.boats[8] = new Boat(5);
+            this.boats[9] = new Boat(6);
+            this.boats[10] = new Boat(6);
+            this.boats[11] = new Boat(6);
+            this.boats[12] = new Boat(6);
+            this.boats[13] = new Boat(6);
+            this.boats[14] = new Boat(6);
+            this.boats[15] = new Boat(6);
+            this.boats[16] = new Boat(6);
+            this.boats[17] = new Boat(6);
+            this.boats[18] = new Boat(6);
+        } else if (34 <= min && min <= 36) {
+            this.boats = new Boat[22];
+            this.boats[0] = new Boat(2);
+            this.boats[1] = new Boat(2);
+            this.boats[2] = new Boat(3);
+            this.boats[3] = new Boat(3);
+            this.boats[4] = new Boat(3);
+            this.boats[5] = new Boat(4);
+            this.boats[6] = new Boat(4);
+            this.boats[7] = new Boat(5);
+            this.boats[8] = new Boat(5);
+            this.boats[9] = new Boat(6);
+            this.boats[10] = new Boat(6);
+            this.boats[11] = new Boat(6);
+            this.boats[12] = new Boat(6);
+            this.boats[13] = new Boat(6);
+            this.boats[14] = new Boat(6);
+            this.boats[15] = new Boat(6);
+            this.boats[16] = new Boat(6);
+            this.boats[17] = new Boat(6);
+            this.boats[18] = new Boat(6);
+            this.boats[19] = new Boat(6);
+            this.boats[20] = new Boat(6);
+            this.boats[21] = new Boat(6);
+        } else if (37 <= min && min <= 39) {
+            this.boats = new Boat[25];
+            this.boats[0] = new Boat(2);
+            this.boats[1] = new Boat(2);
+            this.boats[2] = new Boat(3);
+            this.boats[3] = new Boat(3);
+            this.boats[4] = new Boat(3);
+            this.boats[5] = new Boat(4);
+            this.boats[6] = new Boat(4);
+            this.boats[7] = new Boat(5);
+            this.boats[8] = new Boat(5);
+            this.boats[9] = new Boat(6);
+            this.boats[10] = new Boat(6);
+            this.boats[11] = new Boat(6);
+            this.boats[12] = new Boat(6);
+            this.boats[13] = new Boat(6);
+            this.boats[14] = new Boat(6);
+            this.boats[15] = new Boat(6);
+            this.boats[16] = new Boat(6);
+            this.boats[17] = new Boat(6);
+            this.boats[18] = new Boat(6);
+            this.boats[19] = new Boat(6);
+            this.boats[20] = new Boat(6);
+            this.boats[21] = new Boat(6);
+            this.boats[22] = new Boat(6);
+            this.boats[23] = new Boat(6);
+            this.boats[24] = new Boat(6);
+        } else if (40 <= min && min <= 42) {
+            this.boats = new Boat[28];
+            this.boats[0] = new Boat(2);
+            this.boats[1] = new Boat(2);
+            this.boats[2] = new Boat(3);
+            this.boats[3] = new Boat(3);
+            this.boats[4] = new Boat(3);
+            this.boats[5] = new Boat(4);
+            this.boats[6] = new Boat(4);
+            this.boats[7] = new Boat(5);
+            this.boats[8] = new Boat(5);
+            this.boats[9] = new Boat(6);
+            this.boats[10] = new Boat(6);
+            this.boats[11] = new Boat(6);
+            this.boats[12] = new Boat(6);
+            this.boats[13] = new Boat(6);
+            this.boats[14] = new Boat(6);
+            this.boats[15] = new Boat(6);
+            this.boats[16] = new Boat(6);
+            this.boats[17] = new Boat(6);
+            this.boats[18] = new Boat(6);
+            this.boats[19] = new Boat(6);
+            this.boats[20] = new Boat(6);
+            this.boats[21] = new Boat(6);
+            this.boats[22] = new Boat(6);
+            this.boats[23] = new Boat(6);
+            this.boats[24] = new Boat(6);
+            this.boats[25] = new Boat(6);
+            this.boats[26] = new Boat(6);
+            this.boats[27] = new Boat(6);
+        } else if (43 <= min && min <= 45) {
+            this.boats = new Boat[31];
+            this.boats[0] = new Boat(2);
+            this.boats[1] = new Boat(2);
+            this.boats[2] = new Boat(3);
+            this.boats[3] = new Boat(3);
+            this.boats[4] = new Boat(3);
+            this.boats[5] = new Boat(4);
+            this.boats[6] = new Boat(4);
+            this.boats[7] = new Boat(5);
+            this.boats[8] = new Boat(5);
+            this.boats[9] = new Boat(6);
+            this.boats[10] = new Boat(6);
+            this.boats[11] = new Boat(6);
+            this.boats[12] = new Boat(6);
+            this.boats[13] = new Boat(6);
+            this.boats[14] = new Boat(6);
+            this.boats[15] = new Boat(6);
+            this.boats[16] = new Boat(6);
+            this.boats[17] = new Boat(6);
+            this.boats[18] = new Boat(6);
+            this.boats[19] = new Boat(6);
+            this.boats[20] = new Boat(6);
+            this.boats[21] = new Boat(6);
+            this.boats[22] = new Boat(6);
+            this.boats[23] = new Boat(6);
+            this.boats[24] = new Boat(6);
+            this.boats[25] = new Boat(6);
+            this.boats[26] = new Boat(6);
+            this.boats[27] = new Boat(6);
+            this.boats[28] = new Boat(6);
+            this.boats[29] = new Boat(6);
+            this.boats[30] = new Boat(6);
+        } else if (46 <= min && min <= 48) {
+            this.boats = new Boat[34];
+            this.boats[0] = new Boat(2);
+            this.boats[1] = new Boat(2);
+            this.boats[2] = new Boat(3);
+            this.boats[3] = new Boat(3);
+            this.boats[4] = new Boat(3);
+            this.boats[5] = new Boat(4);
+            this.boats[6] = new Boat(4);
+            this.boats[7] = new Boat(5);
+            this.boats[8] = new Boat(5);
+            this.boats[9] = new Boat(6);
+            this.boats[10] = new Boat(6);
+            this.boats[11] = new Boat(6);
+            this.boats[12] = new Boat(6);
+            this.boats[13] = new Boat(6);
+            this.boats[14] = new Boat(6);
+            this.boats[15] = new Boat(6);
+            this.boats[16] = new Boat(6);
+            this.boats[17] = new Boat(6);
+            this.boats[18] = new Boat(6);
+            this.boats[19] = new Boat(6);
+            this.boats[20] = new Boat(6);
+            this.boats[21] = new Boat(6);
+            this.boats[22] = new Boat(6);
+            this.boats[23] = new Boat(6);
+            this.boats[24] = new Boat(6);
+            this.boats[25] = new Boat(6);
+            this.boats[26] = new Boat(6);
+            this.boats[27] = new Boat(6);
+            this.boats[28] = new Boat(6);
+            this.boats[29] = new Boat(6);
+            this.boats[30] = new Boat(6);
+            this.boats[31] = new Boat(6);
+            this.boats[32] = new Boat(6);
+            this.boats[33] = new Boat(6);
+        } else if (49 <= min && min <= 50) {
+            this.boats = new Boat[37];
+            this.boats[0] = new Boat(2);
+            this.boats[1] = new Boat(2);
+            this.boats[2] = new Boat(3);
+            this.boats[3] = new Boat(3);
+            this.boats[4] = new Boat(3);
+            this.boats[5] = new Boat(4);
+            this.boats[6] = new Boat(4);
+            this.boats[7] = new Boat(5);
+            this.boats[8] = new Boat(5);
+            this.boats[9] = new Boat(6);
+            this.boats[10] = new Boat(6);
+            this.boats[11] = new Boat(6);
+            this.boats[12] = new Boat(6);
+            this.boats[13] = new Boat(6);
+            this.boats[14] = new Boat(6);
+            this.boats[15] = new Boat(6);
+            this.boats[16] = new Boat(6);
+            this.boats[17] = new Boat(6);
+            this.boats[18] = new Boat(6);
+            this.boats[19] = new Boat(6);
+            this.boats[20] = new Boat(6);
+            this.boats[21] = new Boat(6);
+            this.boats[22] = new Boat(6);
+            this.boats[23] = new Boat(6);
+            this.boats[24] = new Boat(6);
+            this.boats[25] = new Boat(6);
+            this.boats[26] = new Boat(6);
+            this.boats[27] = new Boat(6);
+            this.boats[28] = new Boat(6);
+            this.boats[29] = new Boat(6);
+            this.boats[30] = new Boat(6);
+            this.boats[31] = new Boat(6);
+            this.boats[32] = new Boat(6);
+            this.boats[33] = new Boat(6);
+            this.boats[34] = new Boat(6);
+            this.boats[35] = new Boat(6);
+            this.boats[36] = new Boat(6);
         }
     } // generate_boats
 
@@ -160,7 +401,8 @@ public class Grid {
             the boat placement. User inputs either help or cont and
             anything else will prompt the user to input again.
         ******************************************************************/
-        System.out.println("\n" + this.playerName + " Please Specify Where to Place Your Boats.");
+        System.out.println("\n" + this.playerName + " Please Specify Where to Place Your Boats.\n" + 
+                           "Alternatively, input \"auto-place\" to have boats placed randomly.");
         System.out.print("If you would like information on how to place boats, input \"help\", otherwise, input \"cont\": ");
         while (valid) {
             action = this.s.nextLine();
@@ -175,9 +417,13 @@ public class Grid {
                 System.out.print("Input \"cont\" to continue to placement or \"help\" to reprint placement information: ");
             } else if (action.compareTo("cont") == 0) {
                 valid = false;
+            } else if (action.compareTo("auto-place") == 0) {
+                // case for when the player does not want to place their own boats
+                place_boats_AI();
+                return;
             } else {
-                System.out.print("Please enter either \"help\" for more info or \"cont\" to continue to placement: ");
-            }   
+                System.out.print("Please enter either \"help\" for more info, \"cont\" to continue to placement, or \"auto-place\" to place boats randomly: ");
+            }
         }
 
         /***************************************************************
@@ -284,7 +530,7 @@ public class Grid {
 
     // method for randomly placing boats in the case that an AI is playing
     public void place_boats_AI() {
-        System.out.println("AI is Placing its Boats.\n");
+        System.out.println(this.playerName + " is Placing their Boats.\n");
         /*************************************************************
             initiates a tracker variable for loop termination as well as 
             to determine which boat is being placed and starts the loop.
@@ -317,15 +563,15 @@ public class Grid {
             if (success == 0) {
                 numBoat -= 1;
                 try {
-                    Thread.sleep(1000);
+                    Thread.sleep(500);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
                 
-                System.out.printf("AI %s has been placed.%n", curBoat);
+                System.out.printf(this.playerName + " %s has been placed.\n", curBoat);
             }
         }
-        System.out.println("\nAI has placed all its Boats\n");
+        System.out.println("\n" + this.playerName + " has placed all their Boats\n");
     } // place_boats_AI
     
     /*************************************************************************
