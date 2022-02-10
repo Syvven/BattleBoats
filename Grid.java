@@ -17,14 +17,16 @@ public class Grid {
     private int boatsSunk;
     private Scanner s;
     private String playerName;
+    private String type;
     private int[][] weightGrid;
 
     // Constructor
-    public Grid(int rows, int cols, Scanner s, String playerName) {
+    public Grid(int rows, int cols, Scanner s, String playerName, String type) {
         this.rows = rows;
         this.cols = cols;
         this.s = s;
         this.playerName = playerName;
+        this.type = type;
 
         // creates the grid and generates the boat based off the grid size
         fill_grid();
@@ -34,7 +36,7 @@ public class Grid {
         this.shots = 0;
         this.boatsSunk = 0;
         this.boatsLeft = this.boats.length;
-        if (this.playerName.compareTo("Player AI") == 0) {
+        if (this.type.compareTo("AI") == 0) {
             AI_init_weight_grid();
         }
     } // Constructor

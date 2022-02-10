@@ -72,8 +72,8 @@ public class Game {
         int col = 0;
 
         // initializes each player's game grid
-        Grid playerAI = new Grid(rows, cols, this.s, "Player AI");
-        Grid player1 = new Grid(rows, cols, this.s, "Player 1");
+        Grid playerAI = new Grid(rows, cols, this.s, "Player AI", "AI");
+        Grid player1 = new Grid(rows, cols, this.s, "Player 1", "Human");
         
         // places boats for the AI and prompts the player to place their own boats
         playerAI.place_boats_AI();
@@ -251,8 +251,8 @@ public class Game {
         }
 
         // initializes each player's game grid
-        Grid player2 = new Grid(rows, cols, this.s, "Player 2");
-        Grid player1 = new Grid(rows, cols, this.s, "Player 1");
+        Grid player2 = new Grid(rows, cols, this.s, "Player 2", "Human");
+        Grid player1 = new Grid(rows, cols, this.s, "Player 1", "Human");
         
         // places boats for the AI and prompts the player to place their own boats
         player2.place_boats_player();
@@ -466,7 +466,124 @@ public class Game {
 
     // sets up the game for when there are two AI's playing against each other
     private void AI_vs_AI(int rows, int cols) {
+        // initializes variables used
+        boolean game_over = false;
+        boolean playerAI1Turn = false;
+        boolean playerAI2Turn = true;
+        boolean hit;
+        boolean playerAI1Win = false;
+        Boat sink = null;
 
+        // initializes each player's game grid
+        Grid playerAI1 = new Grid(rows, cols, this.s, "Player AI1", "AI");
+        Grid playerAI2 = new Grid(rows, cols, this.s, "Player AI2", "AI");
+        
+        // places boats for the AI and prompts the player to place their own boats
+        playerAI1.place_boats_AI();
+        playerAI2.place_boats_AI();
+
+        System.out.println("\nGame Starting!\n");
+
+        // initiates the game loop that loops until the win condition is reached
+        while (!game_over) {
+            // inverts whose turn it is
+            playerAI2Turn = !playerAI2Turn;
+            playerAI1Turn = !playerAI1Turn;
+
+            // pauses for a second for a more natural flow
+            // try {
+            //     Thread.sleep(1000);
+            // } catch (Exception e) {
+            //     e.printStackTrace();
+            // }
+            
+            // checks for whose turn it is and executes accordingly
+            if (playerAI1Turn) {
+                playerAI2.inc_turns();
+                System.out.println("PlayerAI1's Turn:\n");
+                playerAI2.display();
+
+                System.out.println("\nAI1 is Choosing a Coordinate to Fire on...");
+                // try {
+                //     Thread.sleep(500);
+                // } catch (Exception e) {
+                //     e.printStackTrace();
+                // }
+
+                int[] coords = playerAI1.eval_enemy_grid(playerAI2);
+                playerAI1.display_AI_eval();
+                System.out.printf("AI1 Fired On Square at (%d, %d)!", coords[0], coords[1]);
+                
+                // initiates the fire if the spot is valid
+                hit = playerAI2.fire(coords[0], coords[1]);
+                // checks if the shot hit
+                if (hit) { 
+                    // checks if a boat was sunk with the shot
+                    sink = playerAI2.check_sink();
+                    if (sink != null) {
+                        System.out.println("\nHit!");
+                        System.out.println("AI2's " + sink + " Sunk!\n");
+                    } else {
+                        System.out.println("\nHit!\n");
+                    }   
+                } else {
+                    System.out.println("\nMiss!\n");
+                }
+
+                game_over = playerAI2.check_win();
+
+                if (game_over) {
+                    playerAI1Win = true;
+                }
+            } else if (playerAI2Turn) {
+                playerAI1.inc_turns();
+                System.out.println("PlayerAI2's Turn:\n");
+                playerAI1.display();
+
+                System.out.println("\nAI2 is Choosing a Coordinate to Fire on...");
+                // try {
+                //     Thread.sleep(500);
+                // } catch (Exception e) {
+                //     e.printStackTrace();
+                // }
+
+                int[] coords = playerAI2.eval_enemy_grid(playerAI1);
+                playerAI2.display_AI_eval();
+                System.out.printf("AI2 Fired On Square at (%d, %d)!", coords[0], coords[1]);
+                
+                // initiates the fire if the spot is valid
+                hit = playerAI1.fire(coords[0], coords[1]);
+                // checks if the shot hit
+                if (hit) { 
+                    // checks if a boat was sunk with the shot
+                    sink = playerAI1.check_sink();
+                    if (sink != null) {
+                        System.out.println("\nHit!");
+                        System.out.println("AI1's " + sink + " Sunk!\n");
+                    } else {
+                        System.out.println("\nHit!\n");
+                    }   
+                } else {
+                    System.out.println("\nMiss!\n");
+                }
+
+                game_over = playerAI1.check_win();
+
+                if (game_over) {
+                    playerAI1Win = false;
+                }
+            }
+        }
+
+        System.out.println(playerAI1);
+        System.out.println(playerAI2);
+
+        // checks who won and prints accordingly
+        if (playerAI1Win) {
+            System.out.println("AI1 Wins!");
+        } else {
+            System.out.println("AI2 Wins!");
+        }
     }
 
 
