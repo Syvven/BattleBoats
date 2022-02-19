@@ -11,12 +11,20 @@ public class Boat {
     private Square[] loc;
     private boolean sunk;
     private String noExist = "This boat does not exist.";
+    private boolean decoy = false;
 
     // constructor
     public Boat(int size) {
         this.size = size;
         this.loc = new Square[size];
         this.sunk = false;
+    }
+
+    public Boat(int size, boolean decoy) {
+        this.size = size;
+        this.loc = new Square[size];
+        this.sunk = false;
+        this.decoy = true;
     }
 
     // getters/setters for size
@@ -51,6 +59,7 @@ public class Boat {
         match size with 
         1 -> raft (* ixj grids where i or j == 3* ) 
         2 -> patrol boat (* ixj grids where i or j >= 3 *)
+        2 -> decoy boat (* powerup mode only *)
         3 -> submarine (* ixj grids where i or j >= 4 *)
         4 -> Battleship (* ixj grids where i or j >= 5 *)
         5 -> Carrier (* ixj grids where i or j >= 6 *)
@@ -64,7 +73,12 @@ public class Boat {
         switch (this.size) {
             case 1: retString += "Raft";
                     break;
-            case 2: retString += "Patrol Boat";
+            case 2: 
+                    if (decoy) {
+                        retString += "Decoy Boat";
+                    } else {
+                        retString += "Patrol Boat";
+                    }
                     break;
             case 3: retString += "Submarine";
                     break;
@@ -100,7 +114,12 @@ public class Boat {
         switch (this.size) {
             case 1: retString += "Raft";
                     break;
-            case 2: retString += "Patrol Boat";
+            case 2: 
+                    if (decoy) {
+                        retString += "Decoy Boat";
+                    } else {
+                        retString += "Patrol Boat";
+                    }
                     break;
             case 3: retString += "Submarine";
                     break;

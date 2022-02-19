@@ -12,6 +12,7 @@
         -> X: A boat occupying this square has been hit
         -> -: A square with no boat has been hit
         -> ~: Default state for each square 
+        -> D: indicates a sunk decoy
 *******************************************************************/
 public class Square {
     private int row;

@@ -3,6 +3,7 @@
 
 import java.util.Scanner;
 import java.util.Random;
+import java.util.ArrayList;
 
 // implemented as a 2d array of cells that contain information about game state
 public class Grid {
@@ -19,6 +20,20 @@ public class Grid {
     private String playerName;
     private String type;
     private int[][] weightGrid;
+
+    private int turns_radar = 5;
+    private int turns_multi = 5;
+    private int turns_scatter = 7;
+    private int turns_move = 8;
+    private int turns_decoy = 10;
+    private boolean decoy_avail = false;
+    private boolean radar_avail = false;
+    private boolean multi_avail = false;
+    private boolean scatter_avail = false;
+    private boolean move_avail = false;
+    private ArrayList<Boat> decoys = new ArrayList<Boat>();
+
+
 
     // Constructor
     public Grid(int rows, int cols, Scanner s, String playerName, String type) {
@@ -658,6 +673,7 @@ public class Grid {
     } // place_boat
 
     public boolean fire(int row, int col) {
+        update_avail_powerups();
         if (this.grid[row][col].get_state() == 'B') {
             this.grid[row][col].set_state('X');
             return true;
@@ -667,8 +683,112 @@ public class Grid {
         }
     } // fire
 
-    public void powerup() {
+    public void use_powerup(String powerup, Grid enemy) {
+        switch (powerup) {
+            case "Radar Bomb":
+                if (radar_avail) {
+                    radar_bomb(enemy);
+                }
+                break;
+            case "Multi Shot":
+                if (multi_avail) {
+                    multi_shot(enemy);
+                }
+                break;
+            case "Scatter Shot":
+                if (scatter_avail) {
+                    scatter_shot(enemy);
+                }
+                break;
+            case "Move Ship":
+                if (move_avail) {
+                    move_ship();
+                }
+                break;
+            case "Decoy Ship":
+                if (decoy_avail) {
+                    decoy();
+                }
+                break;
+        }
+    }
 
+    // set of functions to display which powerups are available
+    public ArrayList<String> get_available_powerups() {
+        ArrayList<String> avail = new ArrayList<String>();
+        if (this.radar_avail) {
+            avail.add("Radar Bomb");
+        }
+        if (this.multi_avail) {
+            avail.add("Multi Shot");
+        }
+        if (this.scatter_avail) {
+            avail.add("Scatter Shot");
+        }
+        if (this.move_avail) {
+            avail.add("Move Ship");
+        }
+        if (this.decoy_avail) {
+            avail.add("Decoy Ship");
+        }
+        return avail;
+    }
+
+    // public boolean radar_bomb_avail() {
+    //     return this.radar_avail;
+    // }
+
+    // public boolean multi_shot_avail() {
+    //     return this.multi_avail;
+    // }
+
+    // public boolean scatter_shot_avail() {
+    //     return this.scatter_avail;
+    // }
+
+    // public boolean move_avail() {
+    //     return this.move_avail;
+    // }
+
+    // public boolean decoy_avail() {
+    //     return this.decoy_avail;
+    // }
+
+    public void update_avail_powerups() {
+        if (this.turns_decoy > 0) {
+            this.turns_decoy--;
+            if (this.turns_decoy == 0) {
+                this.decoy_avail = true;
+            }
+        }
+
+        if (this.turns_move > 0) {
+            this.turns_move--;
+            if (this.turns_move == 0) {
+                this.move_avail = true;
+            }
+        }
+
+        if (this.turns_multi > 0) {
+            this.turns_multi--;
+            if (this.turns_multi == 0) {
+                this.multi_avail = true;
+            }
+        }
+
+        if (this.turns_radar > 0) {
+            this.turns_radar--;
+            if (this.turns_radar == 0) {
+                this.radar_avail = true;
+            }
+        }
+
+        if (this.turns_scatter > 0) {
+            this.turns_scatter--;
+            if (this.turns_scatter == 0) {
+                this.scatter_avail = true;
+            }
+        }
     }
 
     /*****************************************************************
@@ -679,8 +799,8 @@ public class Grid {
                in the area
             -> charge time: 5 turns
     *****************************************************************/
-    public int radar_bomb() {
-        return 0;
+    public int radar_bomb(Grid enemy) {
+        
     }
 
     /****************************************************************
@@ -689,7 +809,7 @@ public class Grid {
                just once
             -> charge time: 5 turns
     ****************************************************************/
-    public void multi_shot() {
+    public void multi_shot(Grid enemy) {
 
     }
 
@@ -700,7 +820,7 @@ public class Grid {
                input row/column
             -> charge time: 7 turns
     ***************************************************************/
-    public void scatter_shot() {
+    public void scatter_shot(Grid enemy) {
 
     }
 
@@ -720,7 +840,7 @@ public class Grid {
             -> takes up 2 squares
             -> only one decoy can be placed at a time
             -> only starts charging once it has been destroyed
-            -> charge time: 5 turns
+            -> charge time: 10 turns
             -> if hit by airstrike or torpedo, immediately destoyed
     ****************************************************************/
     public void decoy() {
@@ -744,7 +864,7 @@ public class Grid {
                     returnString += j + "   ";
                 } else {
                     char state = this.grid[i][j].get_state();
-                    if (state == 'X' || state == '-' || state == 'O' || state == 'S') {
+                    if (state == 'X' || state == '-' || state == 'O' || state == 'S' || state == 'D') {
                         returnString += state + "   ";
                     } else {
                         returnString += "?   ";
@@ -783,6 +903,20 @@ public class Grid {
                         boat_loc[j].set_state('S');
                     }
                     return this.boats[i];
+                }
+            }
+        }
+        if (this.decoys.size() > 0) {
+            for (Boat b : decoys) {
+                if (!b.get_sunk()) {
+                    b.set_sunk();
+                    if(b.get_sunk()) {
+                        Square[] boat_loc = b.get_loc();
+                        for (int j = 0; j < boat_loc.length; j++) {
+                            boat_loc[j].set_state('D');
+                        }
+                        return b;
+                    }
                 }
             }
         }
