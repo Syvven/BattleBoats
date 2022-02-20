@@ -80,7 +80,7 @@ public class Game {
         playerAI.place_boats_AI();
         player1.place_boats_player();
 
-        System.out.println("\nGame Starting!\n");
+        System.out.println("\nGame Starting!%n");
 
         // initiates the game loop that loops until the win condition is reached
         while (!game_over) {
@@ -99,7 +99,7 @@ public class Game {
             if (player1Turn) {
                 playerAI.inc_turns();
                 // displays the enemy's board in order for the player to fire upon
-                System.out.println("\nPlayer1's Turn:\n");
+                System.out.println("\nPlayer1's Turn:%n");
                 playerAI.display();
                 System.out.println("\nWhere would you like to fire?");
 
@@ -162,12 +162,12 @@ public class Game {
                     sink = playerAI.check_sink();
                     if (sink != null) {
                         System.out.println("\nHit!");
-                        System.out.println("Enemy " + sink + " Sunk!\n");
+                        System.out.println("Enemy " + sink + " Sunk!%n");
                     } else {
-                        System.out.println("\nHit!\n");
+                        System.out.println("\nHit!%n");
                     }   
                 } else {
-                    System.out.println("\nMiss!\n");
+                    System.out.println("\nMiss!%n");
                 }
                 
                 // last thing the loop does is check for win and if it wins the loops terminates
@@ -179,7 +179,7 @@ public class Game {
                 }
             } else if (playerAITurn) {
                 player1.inc_turns();
-                System.out.println("PlayerAI's Turn:\n");
+                System.out.println("PlayerAI's Turn:%n");
                 player1.display();
 
                 System.out.println("\nAI is Choosing a Coordinate to Fire on...");
@@ -201,12 +201,12 @@ public class Game {
                     sink = player1.check_sink();
                     if (sink != null) {
                         System.out.println("\nHit!");
-                        System.out.println("Player 1's " + sink + " Sunk!\n");
+                        System.out.println("Player 1's " + sink + " Sunk!%n");
                     } else {
-                        System.out.println("\nHit!\n");
+                        System.out.println("\nHit!%n");
                     }   
                 } else {
-                    System.out.println("\nMiss!\n");
+                    System.out.println("\nMiss!%n");
                 }
 
                 game_over = player1.check_win();
@@ -259,7 +259,7 @@ public class Game {
         player2.place_boats_player();
         player1.place_boats_player();
 
-        System.out.println("\nGame Starting!\n");
+        System.out.println("\nGame Starting!%n");
 
         // initiates the game loop that loops until the win condition is reached
         while (!game_over) {
@@ -279,7 +279,7 @@ public class Game {
             if (player1Turn) {
                 player2.inc_turns();
                 // displays the enemy's board in order for the player to fire upon
-                System.out.println("Player1's Turn:\n");
+                System.out.println("Player1's Turn:%n");
                 player2.display();
                 System.out.println("\nWhere would you like to fire?");
 
@@ -342,12 +342,12 @@ public class Game {
                     sink = player2.check_sink();
                     if (sink != null) {
                         System.out.println("\nHit!");
-                        System.out.println("Enemy " + sink + " Sunk!\n");
+                        System.out.println("Enemy " + sink + " Sunk!%n");
                     } else {
-                        System.out.println("\nHit!\n");
+                        System.out.println("\nHit!%n");
                     }   
                 } else {
-                    System.out.println("\nMiss!\n");
+                    System.out.println("\nMiss!%n");
                     
                 }
 
@@ -361,7 +361,7 @@ public class Game {
             } else if (player2Turn) {
                 player1.inc_turns();
                 // displays the enemy's board in order for the player to fire upon
-                System.out.println("Player2's Turn:\n");
+                System.out.println("Player2's Turn:%n");
                 player1.display();
                 System.out.println("\nWhere would you like to fire?");
 
@@ -424,12 +424,12 @@ public class Game {
                     sink = player1.check_sink();
                     if (sink != null) {
                         System.out.println("\nHit!");
-                        System.out.println("Enemy " + sink + " Sunk!\n");
+                        System.out.println("Enemy " + sink + " Sunk!%n");
                     } else {
-                        System.out.println("\nHit!\n");
+                        System.out.println("\nHit!%n");
                     }   
                 } else {
-                    System.out.println("\nMiss!\n");
+                    System.out.println("\nMiss!%n");
                 }
                 
                 // last thing the loop does is check for win and if it wins the loops terminates
@@ -491,7 +491,7 @@ public class Game {
         player2.place_boats_player();
         player1.place_boats_player();
 
-        System.out.println("\nGame Starting!\n");
+        System.out.println("\nGame Starting!%n");
 
         while (!game_over) {
             // pauses for a second for a more natural flow
@@ -510,14 +510,14 @@ public class Game {
             if (player1Turn) {
                 player2.inc_turns();
                 // displays the enemy's board in order for the player to fire upon
-                System.out.println("Player1's Turn:\n");
+                System.out.println("Player1's Turn:%n");
                 player2.display();
                 ArrayList<String> powerups = player1.get_available_powerups();
                 
                 System.out.println("Available Powerups: " + powerups.toString());
 
                 // prompts the user to input an action
-                System.out.print("\nWould you like to use a Powerup or Fire normally (input Powerup/Fire): ");
+                System.out.print("Would you like to use a Powerup or Fire normally (input Powerup/Fire): ");
                 while (!valid) {
                     action = this.s.nextLine();
                     if (action.compareTo("Fire") == 0) {
@@ -536,7 +536,7 @@ public class Game {
                 valid = false;
                 
                 if (use_powerup) {
-                    System.out.println("\nWhich powerup would you like to use?\nAvailable powerups are shown below the printed board.");
+                    System.out.print("\nWhich powerup would you like to use?\nAvailable powerups are shown below the printed board: ");
 
                     while (!valid) {
                         valid = true;
@@ -603,12 +603,12 @@ public class Game {
                         sink = player2.check_sink();
                         if (sink != null) {
                             System.out.println("\nHit!");
-                            System.out.println("Enemy " + sink + " Sunk!\n");
+                            System.out.println("Enemy " + sink + " Sunk!%n");
                         } else {
-                            System.out.println("\nHit!\n");
+                            System.out.println("\nHit!%n");
                         }   
                     } else {
-                        System.out.println("\nMiss!\n");
+                        System.out.println("\nMiss!%n");
                         
                     }
                 }
@@ -624,7 +624,7 @@ public class Game {
             } else if (player2Turn) {
                 player1.inc_turns();
                 // displays the enemy's board in order for the player to fire upon
-                System.out.println("Player2's Turn:\n");
+                System.out.println("Player2's Turn:%n");
                 player1.display();
                 ArrayList<String> powerups = player2.get_available_powerups();
                 
@@ -692,12 +692,12 @@ public class Game {
                     sink = player1.check_sink();
                     if (sink != null) {
                         System.out.println("\nHit!");
-                        System.out.println("Enemy " + sink + " Sunk!\n");
+                        System.out.println("Enemy " + sink + " Sunk!%n");
                     } else {
-                        System.out.println("\nHit!\n");
+                        System.out.println("\nHit!%n");
                     }   
                 } else {
-                    System.out.println("\nMiss!\n");
+                    System.out.println("\nMiss!%n");
                 }
                 
                 // last thing the loop does is check for win and if it wins the loops terminates
@@ -746,7 +746,7 @@ public class Game {
         playerAI1.place_boats_AI();
         playerAI2.place_boats_AI();
 
-        System.out.println("\nGame Starting!\n");
+        System.out.println("\nGame Starting!%n");
 
         // initiates the game loop that loops until the win condition is reached
         while (!game_over) {
@@ -764,7 +764,7 @@ public class Game {
             // checks for whose turn it is and executes accordingly
             if (playerAI1Turn) {
                 playerAI2.inc_turns();
-                System.out.println("PlayerAI1's Turn:\n");
+                System.out.println("PlayerAI1's Turn:%n");
                 playerAI2.display();
 
                 System.out.println("\nAI1 is Choosing a Coordinate to Fire on...");
@@ -786,12 +786,12 @@ public class Game {
                     sink = playerAI2.check_sink();
                     if (sink != null) {
                         System.out.println("\nHit!");
-                        System.out.println("AI2's " + sink + " Sunk!\n");
+                        System.out.println("AI2's " + sink + " Sunk!%n");
                     } else {
-                        System.out.println("\nHit!\n");
+                        System.out.println("\nHit!%n");
                     }   
                 } else {
-                    System.out.println("\nMiss!\n");
+                    System.out.println("\nMiss!%n");
                 }
 
                 game_over = playerAI2.check_win();
@@ -801,7 +801,7 @@ public class Game {
                 }
             } else if (playerAI2Turn) {
                 playerAI1.inc_turns();
-                System.out.println("PlayerAI2's Turn:\n");
+                System.out.println("PlayerAI2's Turn:%n");
                 playerAI1.display();
 
                 System.out.println("\nAI2 is Choosing a Coordinate to Fire on...");
@@ -823,12 +823,12 @@ public class Game {
                     sink = playerAI1.check_sink();
                     if (sink != null) {
                         System.out.println("\nHit!");
-                        System.out.println("AI1's " + sink + " Sunk!\n");
+                        System.out.println("AI1's " + sink + " Sunk!%n");
                     } else {
-                        System.out.println("\nHit!\n");
+                        System.out.println("\nHit!%n");
                     }   
                 } else {
-                    System.out.println("\nMiss!\n");
+                    System.out.println("\nMiss!%n");
                 }
 
                 game_over = playerAI1.check_win();
@@ -855,7 +855,6 @@ public class Game {
     /********************************************************************************************** 
                                         START MAIN
     **********************************************************************************************/
-
 
 
 
@@ -909,6 +908,7 @@ public class Game {
         ******************************************************************/
         valid = true;
         System.out.println("Please input board dimensions. (rows x columns where 4 <= rows, columns <= 50)");
+        System.out.println("Powerup games can only be played on boards 6x6 or larger.");
         while(valid) {
             try {
                 System.out.print("Rows: ");
@@ -948,43 +948,51 @@ public class Game {
             to the rules of normal battleship
         ********************************************************************************************/
         if (players != 0) {
-            valid = true;
-            s.nextLine();
-            System.out.println("Would you like to play Classic Mode or Powerup Mode?");
-            System.out.print("Input \"Classic\" for Classic Mode, \"Powerup\" for Powerup Mode, or \"help\" for more info on powerup mode: ");
-
-            while (valid) {
-                mode = s.nextLine();
-                if (mode.compareTo("Classic") != 0 && mode.compareTo("Powerup") != 0 && mode.compareTo("help") != 0) {
-                    System.out.println("Please enter \"Classic\" for classic mode, \"Powerup\" for powerup mode, or \"help\" for more info: ");
-                } else if (mode.compareTo("help") == 0) {
-                    String printString = "\nClassic Mode: Basic Battleship. No power ups can be used. Each player gets one shot per turn.\n" +
-                                        "Powerup Mode: Battleship but with powerups. A variety of powerups will be at your disposal with limited uses.\n" +
-                                        "Powerups Available:\n" +
-                                        "  -> Yet To Be Implemented\n";
-                    System.out.println(printString);
-                    System.out.print("Enter \"Classic\" for classic mode or \"Powerup\" for powerup mode: ");
-                } else if (mode.compareTo("Powerup") == 0) {
-                    powerup = true;
-                    valid = false;
-                } else {
-                    valid = false;
+            if (rows >= 6 && cols >= 6) {
+                valid = true;
+                s.nextLine();
+                System.out.println("Would you like to play Classic Mode or Powerup Mode?");
+                System.out.print("Input \"Classic\" for Classic Mode, \"Powerup\" for Powerup Mode, or \"help\" for more info on powerup mode: ");
+    
+                while (valid) {
+                    mode = s.nextLine();
+                    if (mode.compareTo("Classic") != 0 && mode.compareTo("Powerup") != 0 && mode.compareTo("help") != 0) {
+                        System.out.println("Please enter \"Classic\" for classic mode, \"Powerup\" for powerup mode, or \"help\" for more info: ");
+                    } else if (mode.compareTo("help") == 0) {
+                        String printString = "\nClassic Mode: Basic Battleship. No power ups can be used. Each player gets one shot per turn.%n" +
+                                             "Powerup Mode: Battleship but with powerups. A variety of powerups will be at your disposal with limited uses.%n" +
+                                             "Powerups Available:%n" +
+                                             "  -> Yet To Be Implemented%n";
+                        System.out.println(printString);
+                        System.out.print("Enter \"Classic\" for classic mode or \"Powerup\" for powerup mode: ");
+                    } else if (mode.compareTo("Powerup") == 0) {
+                        powerup = true;
+                        valid = false;
+                    } else {
+                        valid = false;
+                    }
                 }
+            } else {
+                mode = "Classic";
+                String printString = "Your board size requires that the game be played in Classic mode." +
+                                     "\nClassic Mode: Basic Battleship. No power ups can be used. Each player gets one shot per turn.%n";
+                System.out.println(printString);
             }
         } else {
             mode = "Classic";
             String printString = "AI vs AI requires that the game be played in Classic mode." +
-                                 "\nClassic Mode: Basic Battleship. No power ups can be used. Each player gets one shot per turn.\n";
+                                 "\nClassic Mode: Basic Battleship. No power ups can be used. Each player gets one shot per turn.%n";
             System.out.println(printString);
         }
+        
 
         // reiterates, to the user, game information, creates the game object, and starts the game.
         Game game = new Game(players, rows, cols, s, powerup);
 
         System.out.println("\nGame Starting!");
-        System.out.printf("Mode: %s\n", mode);
-        System.out.printf("Players: %d\n", players);
-        System.out.printf("Board Size: %d x %d\n\n", rows, cols);
+        System.out.printf("Mode: %s%n", mode);
+        System.out.printf("Players: %d%n", players);
+        System.out.printf("Board Size: %d x %d%n%n", rows, cols);
         game.start_game();
         s.close();
     } // main

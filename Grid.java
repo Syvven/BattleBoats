@@ -22,8 +22,8 @@ public class Grid {
     private int[][] weightGrid;
 
     private int turns_radar = 5;
-    private int turns_multi = 5;
-    private int turns_scatter = 7;
+    private int turns_multi = 7;
+    private int turns_scatter = 5;
     private int turns_move = 8;
     private int turns_decoy = 10;
     private boolean decoy_avail = false;
@@ -418,18 +418,18 @@ public class Grid {
             the boat placement. User inputs either help or cont and
             anything else will prompt the user to input again.
         ******************************************************************/
-        System.out.println("\n" + this.playerName + " Please Specify Where to Place Your Boats.\n" + 
+        System.out.println("%n" + this.playerName + " Please Specify Where to Place Your Boats.%n" + 
                            "Alternatively, input \"auto-place\" to have boats placed randomly.");
         System.out.print("If you would like information on how to place boats, input \"help\", otherwise, input \"cont\": ");
         while (valid) {
             action = this.s.nextLine();
             if (action.compareTo("help") == 0) {
-                String printString = "\nPlacement Information:\n-> The user will specify an orientation, followed by row and column for the boat.\n" +
-                                     "-> The specified row and column will indicate where the base of the boat is.\n" +
-                                     "-> From the base, the boat will extend upwards on the board if vertical, and to the right if horizontal.\n" +
-                                     "-> If the boat were to go out of bounds when placed, the user will be prompted to input a new starting location.\n" +
-                                     "-> If the boat were to extend on top of another boat, the user will be prompted to input a new starting location.\n" +
-                                     "-> If the boat is able to be placed, the user will be prompted to place another boat until all boats have been placed.\n";
+                String printString = "\nPlacement Information:%n-> The user will specify an orientation, followed by row and column for the boat.%n" +
+                                     "-> The specified row and column will indicate where the base of the boat is.%n" +
+                                     "-> From the base, the boat will extend upwards on the board if vertical, and to the right if horizontal.%n" +
+                                     "-> If the boat were to go out of bounds when placed, the user will be prompted to input a new starting location.%n" +
+                                     "-> If the boat were to extend on top of another boat, the user will be prompted to input a new starting location.%n" +
+                                     "-> If the boat is able to be placed, the user will be prompted to place another boat until all boats have been placed.%n";
                 System.out.println(printString);
                 System.out.print("Input \"cont\" to continue to placement or \"help\" to reprint placement information: ");
             } else if (action.compareTo("cont") == 0) {
@@ -450,7 +450,7 @@ public class Grid {
             restarts. Tracking variable checks when the last boat
             has been placed and terminates the loop if it has.
         ***************************************************************/
-        System.out.println("\n" + toString());
+        System.out.println("%n" + toString());
         while (numBoat != 0) {
             // sets the current boat being placed
             Boat curBoat = this.boats[numBoat-1];
@@ -462,7 +462,7 @@ public class Grid {
                 user is prompted to enter it again.
             ************************************************************/
             valid = true;
-            System.out.printf("Placing %s (Size %d)\n", curBoat, curBoat.get_size());
+            System.out.printf("Placing %s (Size %d)%n", curBoat, curBoat.get_size());
             System.out.print("Orientation ('V' for vertical, 'H' for horizontal): ");
             while (valid) {
                 whole = s.nextLine();
@@ -537,7 +537,7 @@ public class Grid {
             if (success == -1) {
                 System.out.println("\nBoat Not Placed. Please Enter Valid Starting Coordinates.");
             } else {
-                System.out.printf("\n%s placed.\n\n", curBoat);
+                System.out.printf("%n%s placed.%n%n", curBoat);
                 numBoat--;
                 System.out.println(toString());
             }
@@ -547,7 +547,7 @@ public class Grid {
 
     // method for randomly placing boats in the case that an AI is playing
     public void place_boats_AI() {
-        System.out.println(this.playerName + " is Placing their Boats.\n");
+        System.out.println(this.playerName + " is Placing their Boats.%n");
         /*************************************************************
             initiates a tracker variable for loop termination as well as 
             to determine which boat is being placed and starts the loop.
@@ -585,10 +585,10 @@ public class Grid {
                     e.printStackTrace();
                 }
                 
-                System.out.printf(this.playerName + " %s has been placed.\n", curBoat);
+                System.out.printf(this.playerName + " %s has been placed.%n", curBoat);
             }
         }
-        System.out.println("\n" + this.playerName + " has placed all their Boats\n");
+        System.out.println("%n" + this.playerName + " has placed all their Boats%n");
     } // place_boats_AI
     
     /*************************************************************************
@@ -683,34 +683,36 @@ public class Grid {
         }
     } // fire
 
-    public void use_powerup(String powerup, Grid enemy) {
+    public boolean use_powerup(String powerup, Grid enemy) {
+        System.out.printf("%s chosen.%n", powerup);
         switch (powerup) {
             case "Radar Bomb":
                 if (radar_avail) {
-                    radar_bomb(enemy);
+                    return radar_bomb(enemy);
                 }
                 break;
             case "Multi Shot":
                 if (multi_avail) {
-                    multi_shot(enemy);
+                    return multi_shot(enemy);
                 }
                 break;
             case "Scatter Shot":
                 if (scatter_avail) {
-                    scatter_shot(enemy);
+                    return scatter_shot(enemy);
                 }
                 break;
             case "Move Ship":
                 if (move_avail) {
-                    move_ship();
+                    return move_ship();
                 }
                 break;
             case "Decoy Ship":
                 if (decoy_avail) {
-                    decoy();
+                    return decoy();
                 }
                 break;
         }
+        return false;
     }
 
     // set of functions to display which powerups are available
@@ -733,26 +735,6 @@ public class Grid {
         }
         return avail;
     }
-
-    // public boolean radar_bomb_avail() {
-    //     return this.radar_avail;
-    // }
-
-    // public boolean multi_shot_avail() {
-    //     return this.multi_avail;
-    // }
-
-    // public boolean scatter_shot_avail() {
-    //     return this.scatter_avail;
-    // }
-
-    // public boolean move_avail() {
-    //     return this.move_avail;
-    // }
-
-    // public boolean decoy_avail() {
-    //     return this.decoy_avail;
-    // }
 
     public void update_avail_powerups() {
         if (this.turns_decoy > 0) {
@@ -794,23 +776,213 @@ public class Grid {
     /*****************************************************************
         Radar Bomb:
             -> takes in a row and column for the middle of the bomb
-            -> hits an area of 3 rows x 4 cols
+            -> hits an area of 3 rows x 3 cols
             -> returns a number based on how many hitable squares are
                in the area
             -> charge time: 5 turns
     *****************************************************************/
-    public int radar_bomb(Grid enemy) {
-        
+    public boolean radar_bomb(Grid enemy) {
+        boolean valid = false;
+        int rRow = 0;
+        int rCol = 0;
+        int counter = 0;
+
+        System.out.println("Specify the square to be the center of the radar bomb.");
+        System.out.print("Row: ");
+        while (!valid) {
+            try {
+                rRow = this.s.nextInt();
+                if (rRow >= this.rows || rRow < 0) {
+                    // checks for out of bounds
+                    System.out.println("Row Out of Bounds.");
+                    System.out.print("Please enter a valid row: ");
+                } else {
+                    valid = true;
+                }
+            } catch (Exception e) {
+                System.out.print("Please enter an integer for the row: ");
+                s.nextLine();
+            }
+        }
+
+        System.out.print("Column: ");
+        valid = false;
+        while (!valid) {
+            try {
+                rCol = this.s.nextInt();
+                if (rCol >= this.cols || rCol < 0) {
+                    // checks for out of bounds
+                    System.out.println("Column Out of Bounds.");
+                    System.out.print("Please enter a valid column: ");
+                } else {
+                    valid = true;
+                }
+            } catch (Exception e) {
+                System.out.print("Please enter an integer for the column: ");
+                s.nextLine();
+            }
+        }
+
+        for (int i = rRow-1; i <= rRow+1; i++) {
+            for (int j = rCol-1; i <= rCol+1; i++) {
+                if (i < this.rows && i >= 0 && j < this.cols && j >= 0) {
+                    if (enemy.grid[i][j].get_state() == 'B') {
+                        counter++;
+                    }
+                }
+            }
+        }
+
+        System.out.printf("%n%d enemy squares identified.", counter);
+        this.radar_avail = false;
+        this.turns_radar = 5;
+        enemy.turns++;
+
+        return true;
     }
 
     /****************************************************************
         Multi Shot:
             -> prompts the user to fire multiple times rather than
                just once
-            -> charge time: 5 turns
+            -> charge time: 7 turns
     ****************************************************************/
-    public void multi_shot(Grid enemy) {
+    public boolean multi_shot(Grid enemy) {
+        boolean valid = false;
+        boolean fired = false;
+        int[][] shots = new int[3][2];
+        int mRow = 0;
+        int mCol = 0;
+        int currCoord = 0;
+        int hitCounter = 0;
+        ArrayList<Boat> sBoats = new ArrayList<Boat>();
 
+        int freeCounter = 0;
+        for (int i = 0; i < enemy.grid.length; i++) {
+            for (int j = 0; j < enemy.grid[0].length; j++) {
+                char state = enemy.grid[i][j].get_state();
+                if (state == 'B' || state == '~') {
+                    freeCounter++;
+                }
+            }
+        }
+
+        if (freeCounter < 3) {
+            System.out.println("Not enough open squares to use multi-shot");
+            return false;
+        }
+
+        for (int i = 1; i <= 3; i++) {
+            fired = false;
+            while (!fired) {
+                System.out.printf("Specify the coordinates for shot %d.%n", i);
+                System.out.print("Row: ");
+                while (!valid) {
+                    try {
+                        mRow = this.s.nextInt();
+                        if (mRow >= this.rows || mRow < 0) {
+                            // checks for out of bounds
+                            System.out.println("Row Out of Bounds.");
+                            System.out.print("Please enter a valid row: ");
+                        } else {
+                            valid = true;
+                        }
+                    } catch (Exception e) {
+                        System.out.print("Please enter an integer for the row: ");
+                        s.nextLine();
+                    }
+                }
+
+                System.out.print("Column: ");
+                valid = false;
+                while (!valid) {
+                    try {
+                        mCol = this.s.nextInt();
+                        if (mCol >= this.cols || mCol < 0) {
+                            // checks for out of bounds
+                            System.out.println("Column Out of Bounds.");
+                            System.out.print("Please enter a valid column: ");
+                        } else {
+                            valid = true;
+                        }
+                    } catch (Exception e) {
+                        System.out.print("Please enter an integer for the column: ");
+                        s.nextLine();
+                    }
+                }
+                
+                char state = enemy.grid[mRow][mCol].get_state();
+                if (state == 'X' || state == '-' || state == 'S' || state == 'D') {
+                    System.out.println("Invalid coordinates entered. Please enter a square that has not been fired on.");
+                } else {
+                    shots[currCoord][0] = mRow;
+                    shots[currCoord][1] = mCol;
+                    currCoord++;
+                    fired = true;
+                }
+            }
+        }
+
+        System.out.printf("Entered Coordinates: %n" +
+                          "    Coordinate 1: (%d, %d)%n" +
+                          "    Coordinate 2: (%d, %d)%n" +
+                          "    Coordinate 3: (%d, %d)%n",
+                                shots[0][0], shots[0][1],
+                                shots[1][0], shots[1][1],
+                                shots[2][0], shots[2][1]);
+        System.out.println("If these are not the desired coordinates, type \"redo\" to restart the process.");
+        System.out.println("If you wish to cancel the powerup use, type \"cance\"");
+        System.out.print("Otherwise, type \"confirm\" to fire: ");
+
+        valid = false;
+        String confirm = "";
+        while (!valid) {
+            confirm = this.s.nextLine();
+            if (confirm.compareTo("redo") == 0) {
+                System.out.println("Restarting Process...");
+                this.s.nextLine();
+                multi_shot(enemy);
+            } else if (confirm.compareTo("confirm") == 0) {
+                valid = true;
+                this.s.nextLine();
+            } else if (confirm.compareTo("cancel") == 0) {
+                System.out.println("Cancelling powerup use...");
+                return false;
+            } else {
+                // incorrect input handling
+                System.out.print("\nPlease enter redo or confirm to continue: ");
+            }
+        }
+
+        System.out.println("Firing on specified Coordinates!");
+        for (int i = 0; i < 3; i++) {
+            boolean hit = enemy.fire(shots[i][0], shots[i][1]);
+            if (hit) {
+                hitCounter++;
+            }
+            Boat sunk = enemy.check_sink();
+            if (sunk != null) {
+                sBoats.add(sunk);
+            }
+        }
+        System.out.println("All coordinates successfully fired on!");
+        System.out.printf("You hit enemy ships %d times", hitCounter);
+        if (sBoats.size() > 0) {
+            System.out.print(" and sunk ");
+            for (int i = 0; i < sBoats.size()-1; i++) {
+                System.out.printf("enemy %s, ", sBoats.get(i).toString());
+            }
+            if (sBoats.size() != 1) {
+                System.out.print(" and ");
+            }
+            System.out.printf("enemy %s.%n", sBoats.get(sBoats.size()-1).toString());
+        }
+        
+        this.multi_avail = false;
+        this.turns_multi = 7;
+        enemy.turns++;
+
+        return true;
     }
 
     /***************************************************************
@@ -818,20 +990,159 @@ public class Grid {
             -> takes in a row and column to scatter shot around
             -> randomly hits 3 squares within a 5x5 radius of the 
                input row/column
-            -> charge time: 7 turns
+            -> charge time: 5 turns
     ***************************************************************/
-    public void scatter_shot(Grid enemy) {
+    public boolean scatter_shot(Grid enemy) {
+        int sRow = 0;
+        int sCol = 0;
+        boolean valid = false;
+        boolean free = false;
+        String confirm = "";
+        int hitCounter = 0;
+        ArrayList<Square> valid_squares = new ArrayList<Square>();
+        ArrayList<Square> fire_squares = new ArrayList<Square>();
+        ArrayList<Boat> sBoats = new ArrayList<Boat>();
 
+
+        int freeCounter = 0;
+        for (int i = 0; i < enemy.grid.length; i++) {
+            for (int j = 0; j < enemy.grid[0].length; j++) {
+                char state = enemy.grid[i][j].get_state();
+                if (state == 'B' || state == '~') {
+                    freeCounter++;
+                }
+            }
+        }
+
+        if (freeCounter < 3) {
+            System.out.println("Not enough open squares to use scatter-shot");
+            return false;
+        }
+
+        free = false;
+        while (!free) {
+            System.out.println("Specify the coordinates to center the scatter around.");
+            System.out.println("5x5 area around center must have at least 3 non-fired-upon squares");
+            System.out.print("Row: ");
+            while (!valid) {
+                try {
+                    sRow = this.s.nextInt();
+                    if (sRow >= this.rows || sRow < 0) {
+                        // checks for out of bounds
+                        System.out.println("Row Out of Bounds.");
+                        System.out.print("Please enter a valid row: ");
+                    } else {
+                        valid = true;
+                    }
+                } catch (Exception e) {
+                    System.out.print("Please enter an integer for the row: ");
+                    s.nextLine();
+                }
+            }
+
+            System.out.print("Column: ");
+            valid = false;
+            while (!valid) {
+                try {
+                    sCol = this.s.nextInt();
+                    if (sCol >= this.cols || sCol < 0) {
+                        // checks for out of bounds
+                        System.out.println("Column Out of Bounds.");
+                        System.out.print("Please enter a valid column: ");
+                    } else {
+                        valid = true;
+                    }
+                } catch (Exception e) {
+                    System.out.print("Please enter an integer for the column: ");
+                    s.nextLine();
+                }
+            }
+
+            for (int i = sRow-2; i <= sRow+2; i++) {
+                for (int j = sCol-2; j <= sCol+2; j++) {
+                    char state = enemy.grid[i][j].get_state();
+                    if (state == 'B' || state == '~') {
+                        valid_squares.add(enemy.grid[i][j]);
+                    }
+                }
+            }
+
+            if (valid_squares.size() < 3) {
+                System.out.println("There are not enough open squares around the specified point.");
+                System.out.print("Type \"redo\" to specify a new point, or \"cancel\" to cancel powerup use: ");
+
+                valid = false;
+                while (!valid) {
+                    confirm = this.s.nextLine();
+                    if (confirm.compareTo("redo") == 0) {
+                        System.out.println("Restarting Process...");
+                        this.s.nextLine();
+                        valid = true;
+                    } else if (confirm.compareTo("cancel") == 0) {
+                        System.out.println("Cancelling powerup use...");
+                        return false;
+                    } else {
+                        // incorrect input handling
+                        System.out.print("\nPlease enter redo or confirm to continue: ");
+                    }
+                }
+            } else {
+                free = true;
+            }
+        }
+
+        for (int i = 0; i < 3; i++) {
+            int index = (int)(Math.random()*valid_squares.size());
+            fire_squares.add(valid_squares.remove(index));
+        }
+
+        System.out.println("Firing the scatter shot!");
+        for (int i = 0; i < 3; i++) {
+            boolean hit = enemy.fire(fire_squares.get(i).get_row(), fire_squares.get(i).get_col());
+            if (hit) {
+                hitCounter++;
+            }
+            Boat sunk = enemy.check_sink();
+            if (sunk != null) {
+                sBoats.add(sunk);
+            }
+        }
+
+        System.out.printf("Coordinates hit: %n" +
+                          "    Coordinate 1: (%d, %d)%n" +
+                          "    Coordinate 2: (%d, %d)%n" +
+                          "    Coordinate 3: (%d, %d)%n", 
+                          fire_squares.get(0).get_row(), fire_squares.get(0).get_col(),
+                          fire_squares.get(1).get_row(), fire_squares.get(1).get_col(),
+                          fire_squares.get(2).get_row(), fire_squares.get(2).get_col());
+
+        System.out.printf("You hit enemy ships %d times", hitCounter);
+        if (sBoats.size() > 0) {
+            System.out.print(" and sunk ");
+            for (int i = 0; i < sBoats.size()-1; i++) {
+                System.out.printf("enemy %s, ", sBoats.get(i).toString());
+            }
+            if (sBoats.size() != 1) {
+                System.out.print(" and ");
+            }
+            System.out.printf("enemy %s.%n", sBoats.get(sBoats.size()-1).toString());
+        }
+
+        this.scatter_avail = false;
+        this.turns_scatter = 5;
+        enemy.turns++;
+
+        return true;
     }
 
     /**************************************************************
         Move:
-            -> moves a ship one square in any direction
+            -> moves a random ship one square in any random direction
             -> ship has to have been hit 
             -> charge time: 8 turns
     **************************************************************/
-    public void move_ship() {
-
+    public boolean move_ship() {
+        return false;
     }
 
     /****************************************************************
@@ -843,13 +1154,13 @@ public class Grid {
             -> charge time: 10 turns
             -> if hit by airstrike or torpedo, immediately destoyed
     ****************************************************************/
-    public void decoy() {
-
+    public boolean decoy() {
+        return false;
     }
 
     // displays the gameboard with the relevant information visible
     public void display() {
-        String returnString = this.playerName + '\n';
+        String returnString = this.playerName + "%n";
         for (int i = -1; i < this.rows; i++) {
             for (int j = -1; j < this.cols; j++) {
                 if (i == -1 && j == -1) {
@@ -871,7 +1182,7 @@ public class Grid {
                     }
                 }
             }
-            returnString += "\n";
+            returnString += "%n";
         }
 
         /***********************************************************
@@ -879,9 +1190,9 @@ public class Grid {
             the game is on and the ships that are left/have been sunk
         ***********************************************************/
         System.out.println(returnString);
-        System.out.printf("Turn %d\n", this.turns);
-        System.out.printf("Ships Remaining: %d\n", this.boatsLeft);
-        System.out.printf("Ships Sunk: %d\n", this.boatsSunk);
+        System.out.printf("Turn %d%n", this.turns);
+        System.out.printf("Ships Remaining: %d%n", this.boatsLeft);
+        System.out.printf("Ships Sunk: %d%n", this.boatsSunk);
     } // display
 
     // sets how many ships have been sunk by checking the state of each
@@ -1049,7 +1360,7 @@ public class Grid {
     public void inc_turns() { this.turns++; }
 
     public void display_AI_eval() {
-        String returnString = "Evaluations Board:\n";
+        String returnString = "Evaluations Board:%n";
         for (int i = -1; i < this.rows; i++) {
             for (int j = -1; j < this.cols; j++) {
                 if (i == -1 && j == -1) {
@@ -1066,7 +1377,7 @@ public class Grid {
                     returnString += this.weightGrid[i][j] + "   ";
                 }
             }
-            returnString += "\n";
+            returnString += "%n";
         }
         System.out.println(returnString);
     }
@@ -1074,7 +1385,7 @@ public class Grid {
     // toString to print the board in a readable fashion
     // each row and column is numbered from 0 to 1
     public String toString() {
-        String returnString = this.playerName + '\n';
+        String returnString = this.playerName + "%n";
         for (int i = -1; i < this.rows; i++) {
             for (int j = -1; j < this.cols; j++) {
                 if (i == -1 && j == -1) {
@@ -1091,7 +1402,7 @@ public class Grid {
                     returnString += this.grid[i][j].get_state() + "   ";
                 }
             }
-            returnString += "\n";
+            returnString += "%n";
         }
         return returnString;
     } // toString
