@@ -68,80 +68,33 @@ to place depends on the size of your board. The bigger the board, the more ships
 
 ## Running The Game
 
-### With .class Files
-
 cd into the proper directory in the terminal using: 
 
 ```
 cd <pathname>
 ```
 
-where \<pathname\> is something such as `/home/user/downloads/classfiles`
+where \<pathname\> is something such as `/home/user/downloads/classfiles`.
 
+### With .class Files
 
-
-### via Command Line
-
-Run the `server.py` file in the command line by typing
+Once you are in the proper directory, type in the terminal:
 
 ```
-python server.py
+java Game
 ```
 
-Then use Postman, CURL, or another program to call the available functions
+and the game will run.
 
-### via Docker
+### With .java Files
 
-Build the image using
-
-```
- docker build -t syven/hw1_api .
-```
-
-Then run the image using
+Once you are in the proper directory, type in the terminal:
 
 ```
- docker run -p 127.0.0.1:7999:7999 -it syven/hw1_api
+javac Game.java
 ```
 
-### via Singularity on CSE Labs Machines
-
-SSH into a CSE labs machine with the correct port using
-
-```
-% ssh -L 7999:127.0.0.1:7999 <x500>@<machine>.cselabs.umn.edu
-```
-
-Pull the docker image using
-
-```
-% singularity pull docker://syven/hw1_api
-```
-
-Then run the image using
-
-```
-% singularity run docker://syven/hw1_api
-```
-
----
-
-*Side Note: singularity takes up a lot of space on the Labs Machines. You are almost guaranteed to 
-go over your quota (~1.5 GB)
-In order to minimize the impact, once you are done running the docker image, input into the command line.*
-
-```
-% rm -rf *.sif
-```
-
-*followed by*
-
-```
-% singularity cache clean
-```
-
-*to return your space usage to what it was before pulling and running the docker image.
-This will make your life much easier and will avoid unnecessary errors when sshing.*
+and the game will run.
 
 ## Available Functions
 
