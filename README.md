@@ -94,6 +94,12 @@ Once you are in the proper directory, type in the terminal:
 javac Game.java
 ```
 
+followed by:
+
+```
+java Game
+```
+
 and the game will run.
 
 ## Available Functions
