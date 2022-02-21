@@ -41,6 +41,7 @@ Game of Battleship
 
 This game of BattleBoats functions very similarly to the popular game of BattleShip. 
 Multiple Modes are available.
+
 - Single Player
     - You against an AI. Simple, plain ol' gameplay. 
 - Multi Player
@@ -51,29 +52,17 @@ Multiple Modes are available.
     - Like Multi Player, but with powerups!!
 
 BattleBoats includes these modes playable on boards that range from 4x4 to 50x50! (if you have the time)
+BattleBoats is playable right in the terminal (for now...)
+The AI implemented, although rudimentary, is not one to be trifled with.
 
 
 ## Pre-Requisites
 
-- [Python](https://www.python.org/)
+- [Java](https://www.python.org/)
 
-- Flask
+- A Terminal
 
->Install Flask with 
->
->```
->pip install --no-cache-dir -r requirements.txt
->```
-
-#### or
-
- - Docker
-
-#### or 
-
-- SSH/CSE Labs Machine Access
-
-## Running The Library
+## Running The Game
 
 ### via Command Line
 
