@@ -127,11 +127,21 @@ BattleBoats comes with multiple modes:
     - Each powerup has a different charge time
     - Each powerup does something unique, the stronger the powerup, the longer the charge time
     - Powerups include:
-        - Radar Bomb: 
+        - Radar Bomb: Tells the player how many enemy boat squares are in a 3x3 area
+        - Scatter Shot: Hits 3 squares in a 5x5 square centered on a specified coordinate
+        - Multi Shot: Allows the player to make three shots in one turn
+        - Move Ship: Moves a ship 1 or 2 squares in a random direction but only if its been hit!!
+        - Decoy Ship: Allows the user to place a 2 square decoy ship
+        - Possibly More in the future!
+- AI vs AI
+    - AI vs AI mode is quite simple
+    - Two AI's duel each other in a classic game
+    - The player specifies the board size 
+    - In the interest of time, AI games go by quite quick
 
 ## Bugs / Suggestions
 
 *If you run into any bugs or issues while playing BattleBoats, or want to suggest any features, feel free to comment at [the github repository](https://github.com/Syvven/BattleShip)
 or [email me](hend0800@umn.edu) directly.* 
 
-*I hope that you enjoy BattlBoats!!*
+*I hope that you enjoy BattleBoats!!*
