@@ -24,7 +24,7 @@ public class Boat {
         this.size = size;
         this.loc = new Square[size];
         this.sunk = false;
-        this.decoy = true;
+        this.decoy = decoy;
     }
 
     // getters/setters for size

@@ -80,7 +80,7 @@ public class Game {
         playerAI.place_boats_AI();
         player1.place_boats_player();
 
-        System.out.println("\nGame Starting!%n");
+        System.out.println("\nGame Starting!\n");
 
         // initiates the game loop that loops until the win condition is reached
         while (!game_over) {
@@ -99,7 +99,7 @@ public class Game {
             if (player1Turn) {
                 playerAI.inc_turns();
                 // displays the enemy's board in order for the player to fire upon
-                System.out.println("\nPlayer1's Turn:%n");
+                System.out.println("\nPlayer1's Turn:\n");
                 playerAI.display();
                 System.out.println("\nWhere would you like to fire?");
 
@@ -162,12 +162,12 @@ public class Game {
                     sink = playerAI.check_sink();
                     if (sink != null) {
                         System.out.println("\nHit!");
-                        System.out.println("Enemy " + sink + " Sunk!%n");
+                        System.out.println("Enemy " + sink + " Sunk!\n");
                     } else {
-                        System.out.println("\nHit!%n");
+                        System.out.println("\nHit!\n");
                     }   
                 } else {
-                    System.out.println("\nMiss!%n");
+                    System.out.println("\nMiss!\n");
                 }
                 
                 // last thing the loop does is check for win and if it wins the loops terminates
@@ -179,7 +179,7 @@ public class Game {
                 }
             } else if (playerAITurn) {
                 player1.inc_turns();
-                System.out.println("PlayerAI's Turn:%n");
+                System.out.println("PlayerAI's Turn:\n");
                 player1.display();
 
                 System.out.println("\nAI is Choosing a Coordinate to Fire on...");
@@ -201,12 +201,12 @@ public class Game {
                     sink = player1.check_sink();
                     if (sink != null) {
                         System.out.println("\nHit!");
-                        System.out.println("Player 1's " + sink + " Sunk!%n");
+                        System.out.println("Player 1's " + sink + " Sunk!\n");
                     } else {
-                        System.out.println("\nHit!%n");
+                        System.out.println("\nHit!\n");
                     }   
                 } else {
-                    System.out.println("\nMiss!%n");
+                    System.out.println("\nMiss!\n");
                 }
 
                 game_over = player1.check_win();
@@ -259,7 +259,7 @@ public class Game {
         player2.place_boats_player();
         player1.place_boats_player();
 
-        System.out.println("\nGame Starting!%n");
+        System.out.println("\nGame Starting!\n");
 
         // initiates the game loop that loops until the win condition is reached
         while (!game_over) {
@@ -279,7 +279,7 @@ public class Game {
             if (player1Turn) {
                 player2.inc_turns();
                 // displays the enemy's board in order for the player to fire upon
-                System.out.println("Player1's Turn:%n");
+                System.out.println("Player1's Turn:\n");
                 player2.display();
                 System.out.println("\nWhere would you like to fire?");
 
@@ -342,12 +342,12 @@ public class Game {
                     sink = player2.check_sink();
                     if (sink != null) {
                         System.out.println("\nHit!");
-                        System.out.println("Enemy " + sink + " Sunk!%n");
+                        System.out.println("Enemy " + sink + " Sunk!\n");
                     } else {
-                        System.out.println("\nHit!%n");
+                        System.out.println("\nHit!\n");
                     }   
                 } else {
-                    System.out.println("\nMiss!%n");
+                    System.out.println("\nMiss!\n");
                     
                 }
 
@@ -361,7 +361,7 @@ public class Game {
             } else if (player2Turn) {
                 player1.inc_turns();
                 // displays the enemy's board in order for the player to fire upon
-                System.out.println("Player2's Turn:%n");
+                System.out.println("Player2's Turn:\n");
                 player1.display();
                 System.out.println("\nWhere would you like to fire?");
 
@@ -424,12 +424,12 @@ public class Game {
                     sink = player1.check_sink();
                     if (sink != null) {
                         System.out.println("\nHit!");
-                        System.out.println("Enemy " + sink + " Sunk!%n");
+                        System.out.println("Enemy " + sink + " Sunk!\n");
                     } else {
-                        System.out.println("\nHit!%n");
+                        System.out.println("\nHit!\n");
                     }   
                 } else {
-                    System.out.println("\nMiss!%n");
+                    System.out.println("\nMiss!\n");
                 }
                 
                 // last thing the loop does is check for win and if it wins the loops terminates
@@ -491,7 +491,7 @@ public class Game {
         player2.place_boats_player();
         player1.place_boats_player();
 
-        System.out.println("\nGame Starting!%n");
+        System.out.println("\nGame Starting!\n");
 
         while (!game_over) {
             // pauses for a second for a more natural flow
@@ -510,7 +510,7 @@ public class Game {
             if (player1Turn) {
                 player2.inc_turns();
                 // displays the enemy's board in order for the player to fire upon
-                System.out.println("Player1's Turn:%n");
+                System.out.println("Player1's Turn:\n");
                 player2.display();
                 ArrayList<String> powerups = player1.get_available_powerups();
                 
@@ -603,12 +603,12 @@ public class Game {
                         sink = player2.check_sink();
                         if (sink != null) {
                             System.out.println("\nHit!");
-                            System.out.println("Enemy " + sink + " Sunk!%n");
+                            System.out.println("Enemy " + sink + " Sunk!\n");
                         } else {
-                            System.out.println("\nHit!%n");
+                            System.out.println("\nHit!\n");
                         }   
                     } else {
-                        System.out.println("\nMiss!%n");
+                        System.out.println("\nMiss!\n");
                         
                     }
                 }
@@ -624,88 +624,114 @@ public class Game {
             } else if (player2Turn) {
                 player1.inc_turns();
                 // displays the enemy's board in order for the player to fire upon
-                System.out.println("Player2's Turn:%n");
+                System.out.println("Player2's Turn:\n");
                 player1.display();
                 ArrayList<String> powerups = player2.get_available_powerups();
                 
                 System.out.println("Available Powerups: " + powerups.toString());
 
-                
-                System.out.println("\nWhere would you like to fire?");
-
-                spot_clear = false;
-                while (!spot_clear) {
-                    // prompts the user to enter a row and handles that accordingly
-                    System.out.print("Row: ");
-                    valid = false;
-                    while (!valid) {
-                        try {
-                            row = this.s.nextInt();
-                            if (row >= this.rows || row < 0) {
-                                // checks for out of bounds
-                                System.out.println("Row Out of Bounds.");
-                                System.out.print("Please enter a valid row: ");
-                            } else {
-                                valid = true;
-                            }
-                        } catch (Exception e) {
-                            // catches non-integer inputs
-                            System.out.print("Please enter an integer for starting row: ");
-                            s.nextLine();
-                        }
-                    }
-
-                    // prompts the user to enter a column and handles that accordingly
-                    valid = false;
-                    System.out.print("Column: ");
-                    while (!valid) {
-                        try {
-                            col = s.nextInt();
-                            if (col >= this.cols || col < 0) {
-                                // checks for out of bounds
-                                System.out.println("\nColumn Out of Bounds.");
-                                System.out.print("Please enter a valid column: ");
-                            } else {
-                                valid = true;
-                            }
-                        } catch (Exception e) {
-                            // catches non-integer inputs
-                            System.out.print("\nPlease enter an integer for starting column: ");
-                            s.nextLine();
-                        }
-                    }
-
-                    // checks for if the spot had already been guessed and breaks if it hasnt
-                    char state = player1.get_grid()[row][col].get_state();
-                    if (state == 'X' || state == '-') {
-                        System.out.println("Repeat Coordinates. Please choose new coordinates.");
+                // prompts the user to input an action
+                System.out.print("Would you like to use a Powerup or Fire normally (input Powerup/Fire): ");
+                while (!valid) {
+                    action = this.s.nextLine();
+                    if (action.compareTo("Fire") == 0) {
+                        valid = true;
+                        use_powerup = false;
+                        this.s.nextLine();
+                    } else if (action.compareTo("Powerup") == 0) {
+                        valid = true;
+                        use_powerup = true;
+                        this.s.nextLine();
                     } else {
-                        spot_clear = true;
+                        // incorrect input handling
+                        System.out.print("\nPlease enter either \"Fire\" or \"Powerup\": ");
                     }
                 }
+                valid = false;
+                
+                if (use_powerup) {
+                    System.out.print("\nWhich powerup would you like to use?\nAvailable powerups are shown below the printed board: ");
 
-                // initiates the fire if the spot is valid
-                hit = player1.fire(row, col);
-                // checks if the shot hit
-                if (hit) { 
-                    // checks if a boat was sunk with the shot
-                    sink = player1.check_sink();
-                    if (sink != null) {
-                        System.out.println("\nHit!");
-                        System.out.println("Enemy " + sink + " Sunk!%n");
-                    } else {
-                        System.out.println("\nHit!%n");
-                    }   
+                    while (!valid) {
+                        valid = true;
+                    }
                 } else {
-                    System.out.println("\nMiss!%n");
-                }
-                
-                // last thing the loop does is check for win and if it wins the loops terminates
-                game_over = player1.check_win();
+                    System.out.println("\nWhere would you like to fire?");
 
-                // if player2 wins, sets the win check to false
-                if (game_over) {
-                    player1Win = false;
+                    spot_clear = false;
+                    while (!spot_clear) {
+                        // prompts the user to enter a row and handles that accordingly
+                        System.out.print("Row: ");
+                        valid = false;
+                        while (!valid) {
+                            try {
+                                row = this.s.nextInt();
+                                if (row >= this.rows || row < 0) {
+                                    // checks for out of bounds
+                                    System.out.println("Row Out of Bounds.");
+                                    System.out.print("Please enter a valid row: ");
+                                } else {
+                                    valid = true;
+                                }
+                            } catch (Exception e) {
+                                // catches non-integer inputs
+                                System.out.print("Please enter an integer for starting row: ");
+                                s.nextLine();
+                            }
+                        }
+
+                        // prompts the user to enter a column and handles that accordingly
+                        valid = false;
+                        System.out.print("Column: ");
+                        while (!valid) {
+                            try {
+                                col = s.nextInt();
+                                if (col >= this.cols || col < 0) {
+                                    // checks for out of bounds
+                                    System.out.println("\nColumn Out of Bounds.");
+                                    System.out.print("Please enter a valid column: ");
+                                } else {
+                                    valid = true;
+                                }
+                            } catch (Exception e) {
+                                // catches non-integer inputs
+                                System.out.print("\nPlease enter an integer for starting column: ");
+                                s.nextLine();
+                            }
+                        }
+
+                        // checks for if the spot had already been guessed and breaks if it hasnt
+                        char state = player1.get_grid()[row][col].get_state();
+                        if (state == 'X' || state == '-') {
+                            System.out.println("Repeat Coordinates. Please choose new coordinates.");
+                        } else {
+                            spot_clear = true;
+                        }
+                    }
+
+                    // initiates the fire if the spot is valid
+                    hit = player1.fire(row, col);
+                    // checks if the shot hit
+                    if (hit) { 
+                        // checks if a boat was sunk with the shot
+                        sink = player1.check_sink();
+                        if (sink != null) {
+                            System.out.println("\nHit!");
+                            System.out.println("Enemy " + sink + " Sunk!\n");
+                        } else {
+                            System.out.println("\nHit!\n");
+                        }   
+                    } else {
+                        System.out.println("\nMiss!\n");
+                    }
+                    
+                    // last thing the loop does is check for win and if it wins the loops terminates
+                    game_over = player1.check_win();
+
+                    // if player2 wins, sets the win check to false
+                    if (game_over) {
+                        player1Win = false;
+                    }
                 }
             }
         }
@@ -746,7 +772,7 @@ public class Game {
         playerAI1.place_boats_AI();
         playerAI2.place_boats_AI();
 
-        System.out.println("\nGame Starting!%n");
+        System.out.println("\nGame Starting!\n");
 
         // initiates the game loop that loops until the win condition is reached
         while (!game_over) {
@@ -764,7 +790,7 @@ public class Game {
             // checks for whose turn it is and executes accordingly
             if (playerAI1Turn) {
                 playerAI2.inc_turns();
-                System.out.println("PlayerAI1's Turn:%n");
+                System.out.println("PlayerAI1's Turn:\n");
                 playerAI2.display();
 
                 System.out.println("\nAI1 is Choosing a Coordinate to Fire on...");
@@ -786,12 +812,12 @@ public class Game {
                     sink = playerAI2.check_sink();
                     if (sink != null) {
                         System.out.println("\nHit!");
-                        System.out.println("AI2's " + sink + " Sunk!%n");
+                        System.out.println("AI2's " + sink + " Sunk!\n");
                     } else {
-                        System.out.println("\nHit!%n");
+                        System.out.println("\nHit!\n");
                     }   
                 } else {
-                    System.out.println("\nMiss!%n");
+                    System.out.println("\nMiss!\n");
                 }
 
                 game_over = playerAI2.check_win();
@@ -801,7 +827,7 @@ public class Game {
                 }
             } else if (playerAI2Turn) {
                 playerAI1.inc_turns();
-                System.out.println("PlayerAI2's Turn:%n");
+                System.out.println("PlayerAI2's Turn:\n");
                 playerAI1.display();
 
                 System.out.println("\nAI2 is Choosing a Coordinate to Fire on...");
@@ -823,12 +849,12 @@ public class Game {
                     sink = playerAI1.check_sink();
                     if (sink != null) {
                         System.out.println("\nHit!");
-                        System.out.println("AI1's " + sink + " Sunk!%n");
+                        System.out.println("AI1's " + sink + " Sunk!\n");
                     } else {
-                        System.out.println("\nHit!%n");
+                        System.out.println("\nHit!\n");
                     }   
                 } else {
-                    System.out.println("\nMiss!%n");
+                    System.out.println("\nMiss!\n");
                 }
 
                 game_over = playerAI1.check_win();
@@ -959,10 +985,10 @@ public class Game {
                     if (mode.compareTo("Classic") != 0 && mode.compareTo("Powerup") != 0 && mode.compareTo("help") != 0) {
                         System.out.println("Please enter \"Classic\" for classic mode, \"Powerup\" for powerup mode, or \"help\" for more info: ");
                     } else if (mode.compareTo("help") == 0) {
-                        String printString = "\nClassic Mode: Basic Battleship. No power ups can be used. Each player gets one shot per turn.%n" +
-                                             "Powerup Mode: Battleship but with powerups. A variety of powerups will be at your disposal with limited uses.%n" +
-                                             "Powerups Available:%n" +
-                                             "  -> Yet To Be Implemented%n";
+                        String printString = "\nClassic Mode: Basic Battleship. No power ups can be used. Each player gets one shot per turn.\n" +
+                                             "Powerup Mode: Battleship but with powerups. A variety of powerups will be at your disposal with limited uses.\n" +
+                                             "Powerups Available:\n" +
+                                             "  -> Yet To Be Implemented\n";
                         System.out.println(printString);
                         System.out.print("Enter \"Classic\" for classic mode or \"Powerup\" for powerup mode: ");
                     } else if (mode.compareTo("Powerup") == 0) {
@@ -975,13 +1001,13 @@ public class Game {
             } else {
                 mode = "Classic";
                 String printString = "Your board size requires that the game be played in Classic mode." +
-                                     "\nClassic Mode: Basic Battleship. No power ups can be used. Each player gets one shot per turn.%n";
+                                     "\nClassic Mode: Basic Battleship. No power ups can be used. Each player gets one shot per turn.\n";
                 System.out.println(printString);
             }
         } else {
             mode = "Classic";
             String printString = "AI vs AI requires that the game be played in Classic mode." +
-                                 "\nClassic Mode: Basic Battleship. No power ups can be used. Each player gets one shot per turn.%n";
+                                 "\nClassic Mode: Basic Battleship. No power ups can be used. Each player gets one shot per turn.\n";
             System.out.println(printString);
         }
         
@@ -990,9 +1016,9 @@ public class Game {
         Game game = new Game(players, rows, cols, s, powerup);
 
         System.out.println("\nGame Starting!");
-        System.out.printf("Mode: %s%n", mode);
-        System.out.printf("Players: %d%n", players);
-        System.out.printf("Board Size: %d x %d%n%n", rows, cols);
+        System.out.printf("Mode: %s\n", mode);
+        System.out.printf("Players: %d\n", players);
+        System.out.printf("Board Size: %d x %d\n\n", rows, cols);
         game.start_game();
         s.close();
     } // main

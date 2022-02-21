@@ -27,6 +27,7 @@ public class Grid {
     private int turns_move = 8;
     private int turns_decoy = 10;
     private boolean decoy_avail = false;
+    private boolean decoy_alive = false;
     private boolean radar_avail = false;
     private boolean multi_avail = false;
     private boolean scatter_avail = false;
@@ -418,18 +419,18 @@ public class Grid {
             the boat placement. User inputs either help or cont and
             anything else will prompt the user to input again.
         ******************************************************************/
-        System.out.println("%n" + this.playerName + " Please Specify Where to Place Your Boats.%n" + 
+        System.out.println("\n" + this.playerName + " Please Specify Where to Place Your Boats.\n" + 
                            "Alternatively, input \"auto-place\" to have boats placed randomly.");
         System.out.print("If you would like information on how to place boats, input \"help\", otherwise, input \"cont\": ");
         while (valid) {
             action = this.s.nextLine();
             if (action.compareTo("help") == 0) {
-                String printString = "\nPlacement Information:%n-> The user will specify an orientation, followed by row and column for the boat.%n" +
-                                     "-> The specified row and column will indicate where the base of the boat is.%n" +
-                                     "-> From the base, the boat will extend upwards on the board if vertical, and to the right if horizontal.%n" +
-                                     "-> If the boat were to go out of bounds when placed, the user will be prompted to input a new starting location.%n" +
-                                     "-> If the boat were to extend on top of another boat, the user will be prompted to input a new starting location.%n" +
-                                     "-> If the boat is able to be placed, the user will be prompted to place another boat until all boats have been placed.%n";
+                String printString = "\nPlacement Information:\n-> The user will specify an orientation, followed by row and column for the boat.\n" +
+                                     "-> The specified row and column will indicate where the base of the boat is.\n" +
+                                     "-> From the base, the boat will extend upwards on the board if vertical, and to the right if horizontal.\n" +
+                                     "-> If the boat were to go out of bounds when placed, the user will be prompted to input a new starting location.\n" +
+                                     "-> If the boat were to extend on top of another boat, the user will be prompted to input a new starting location.\n" +
+                                     "-> If the boat is able to be placed, the user will be prompted to place another boat until all boats have been placed.\n";
                 System.out.println(printString);
                 System.out.print("Input \"cont\" to continue to placement or \"help\" to reprint placement information: ");
             } else if (action.compareTo("cont") == 0) {
@@ -450,7 +451,7 @@ public class Grid {
             restarts. Tracking variable checks when the last boat
             has been placed and terminates the loop if it has.
         ***************************************************************/
-        System.out.println("%n" + toString());
+        System.out.println("\n" + toString());
         while (numBoat != 0) {
             // sets the current boat being placed
             Boat curBoat = this.boats[numBoat-1];
@@ -462,7 +463,7 @@ public class Grid {
                 user is prompted to enter it again.
             ************************************************************/
             valid = true;
-            System.out.printf("Placing %s (Size %d)%n", curBoat, curBoat.get_size());
+            System.out.printf("Placing %s (Size %d)\n", curBoat, curBoat.get_size());
             System.out.print("Orientation ('V' for vertical, 'H' for horizontal): ");
             while (valid) {
                 whole = s.nextLine();
@@ -537,7 +538,7 @@ public class Grid {
             if (success == -1) {
                 System.out.println("\nBoat Not Placed. Please Enter Valid Starting Coordinates.");
             } else {
-                System.out.printf("%n%s placed.%n%n", curBoat);
+                System.out.printf("\n%s placed.\n\n", curBoat);
                 numBoat--;
                 System.out.println(toString());
             }
@@ -547,7 +548,7 @@ public class Grid {
 
     // method for randomly placing boats in the case that an AI is playing
     public void place_boats_AI() {
-        System.out.println(this.playerName + " is Placing their Boats.%n");
+        System.out.println(this.playerName + " is Placing their Boats.\n");
         /*************************************************************
             initiates a tracker variable for loop termination as well as 
             to determine which boat is being placed and starts the loop.
@@ -585,10 +586,10 @@ public class Grid {
                     e.printStackTrace();
                 }
                 
-                System.out.printf(this.playerName + " %s has been placed.%n", curBoat);
+                System.out.printf(this.playerName + " %s has been placed.\n", curBoat);
             }
         }
-        System.out.println("%n" + this.playerName + " has placed all their Boats%n");
+        System.out.println("\n" + this.playerName + " has placed all their Boats\n");
     } // place_boats_AI
     
     /*************************************************************************
@@ -615,7 +616,7 @@ public class Grid {
                 // checks if the boat would intersect with any other boat, fails if so
                 Square[] loc = new Square[boat.get_size()];
                 for (int i = 0; i < loc.length; i++) {
-                    if (this.grid[row-i][col].get_state() == 'B') {
+                    if (this.grid[row-i][col].get_state() != '~') {
                         return -1;
                     }
                 }
@@ -647,7 +648,7 @@ public class Grid {
                 // checks if the boat would intersect with any other boat, fails if so
                 Square[] loc = new Square[boat.get_size()];
                 for (int i = 0; i < loc.length; i++) {
-                    if (this.grid[row][col+i].get_state() == 'B') {
+                    if (this.grid[row][col+i].get_state() != '~') {
                         return -1;
                     }
                 }
@@ -684,7 +685,7 @@ public class Grid {
     } // fire
 
     public boolean use_powerup(String powerup, Grid enemy) {
-        System.out.printf("%s chosen.%n", powerup);
+        System.out.printf("%s chosen.\n", powerup);
         switch (powerup) {
             case "Radar Bomb":
                 if (radar_avail) {
@@ -703,12 +704,12 @@ public class Grid {
                 break;
             case "Move Ship":
                 if (move_avail) {
-                    return move_ship();
+                    return move_ship(enemy);
                 }
                 break;
             case "Decoy Ship":
                 if (decoy_avail) {
-                    return decoy();
+                    return decoy(enemy);
                 }
                 break;
         }
@@ -737,10 +738,12 @@ public class Grid {
     }
 
     public void update_avail_powerups() {
-        if (this.turns_decoy > 0) {
-            this.turns_decoy--;
-            if (this.turns_decoy == 0) {
-                this.decoy_avail = true;
+        if (!this.decoy_alive) {
+            if (this.turns_decoy > 0) {
+                this.turns_decoy--;
+                if (this.turns_decoy == 0) {
+                    this.decoy_avail = true;
+                }
             }
         }
 
@@ -833,7 +836,7 @@ public class Grid {
             }
         }
 
-        System.out.printf("%n%d enemy squares identified.", counter);
+        System.out.printf("\n%d enemy squares identified.", counter);
         this.radar_avail = false;
         this.turns_radar = 5;
         enemy.turns++;
@@ -875,7 +878,7 @@ public class Grid {
         for (int i = 1; i <= 3; i++) {
             fired = false;
             while (!fired) {
-                System.out.printf("Specify the coordinates for shot %d.%n", i);
+                System.out.printf("Specify the coordinates for shot %d.\n", i);
                 System.out.print("Row: ");
                 while (!valid) {
                     try {
@@ -923,10 +926,10 @@ public class Grid {
             }
         }
 
-        System.out.printf("Entered Coordinates: %n" +
-                          "    Coordinate 1: (%d, %d)%n" +
-                          "    Coordinate 2: (%d, %d)%n" +
-                          "    Coordinate 3: (%d, %d)%n",
+        System.out.printf("Entered Coordinates: \n" +
+                          "    Coordinate 1: (%d, %d)\n" +
+                          "    Coordinate 2: (%d, %d)\n" +
+                          "    Coordinate 3: (%d, %d)\n",
                                 shots[0][0], shots[0][1],
                                 shots[1][0], shots[1][1],
                                 shots[2][0], shots[2][1]);
@@ -975,7 +978,7 @@ public class Grid {
             if (sBoats.size() != 1) {
                 System.out.print(" and ");
             }
-            System.out.printf("enemy %s.%n", sBoats.get(sBoats.size()-1).toString());
+            System.out.printf("enemy %s.\n", sBoats.get(sBoats.size()-1).toString());
         }
         
         this.multi_avail = false;
@@ -1108,10 +1111,10 @@ public class Grid {
             }
         }
 
-        System.out.printf("Coordinates hit: %n" +
-                          "    Coordinate 1: (%d, %d)%n" +
-                          "    Coordinate 2: (%d, %d)%n" +
-                          "    Coordinate 3: (%d, %d)%n", 
+        System.out.printf("Coordinates hit: \n" +
+                          "    Coordinate 1: (%d, %d)\n" +
+                          "    Coordinate 2: (%d, %d)\n" +
+                          "    Coordinate 3: (%d, %d)\n", 
                           fire_squares.get(0).get_row(), fire_squares.get(0).get_col(),
                           fire_squares.get(1).get_row(), fire_squares.get(1).get_col(),
                           fire_squares.get(2).get_row(), fire_squares.get(2).get_col());
@@ -1125,7 +1128,7 @@ public class Grid {
             if (sBoats.size() != 1) {
                 System.out.print(" and ");
             }
-            System.out.printf("enemy %s.%n", sBoats.get(sBoats.size()-1).toString());
+            System.out.printf("enemy %s.\n", sBoats.get(sBoats.size()-1).toString());
         }
 
         this.scatter_avail = false;
@@ -1137,12 +1140,192 @@ public class Grid {
 
     /**************************************************************
         Move:
-            -> moves a random ship one square in any random direction
-            -> ship has to have been hit 
+            -> moves a random ship one or two squares in any random direction
+            -> ship has to have been hit and there must be 2 squares of open space in 
+               at least one direction (north, south, east, west)
             -> charge time: 8 turns
     **************************************************************/
-    public boolean move_ship() {
-        return false;
+    public boolean move_ship(Grid enemy) {
+        ArrayList<Boat> movable = new ArrayList<Boat>();
+        ArrayList<String> valid_dirs = new ArrayList<String>();
+        boolean valid = false;
+        Square[] loc;
+        Square[] newloc;
+        char[] states;
+        boolean north = false;
+        boolean south = false;
+        boolean east = false;
+        boolean west = false;
+
+        for (int i = 0; i < this.boats.length; i++) {
+            loc = this.boats[i].get_loc();
+            for (int j = 0; j < loc.length; i++) {
+                if (loc[j].get_state() == 'X') {
+                    movable.add(this.boats[i]);
+                    break;
+                }
+            }
+        }
+
+        System.out.println("Attempting to move random boat...");
+        try {
+            Thread.sleep(1000);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        while (!valid) {
+            if (movable.size() == 0) {
+                System.out.println("No Available Boat to Move.\nCancelling powerup use.");
+                return false;
+            }
+
+            Boat mBoat = movable.remove((int)(Math.random()*movable.size()));
+            char orient = mBoat.get_orient();
+            loc = mBoat.get_loc();
+
+            int last_row = loc[loc.length-1].get_row();
+            int last_col = loc[loc.length-1].get_col();
+            int first_row = loc[0].get_row();
+            int first_col = loc[0].get_col();
+
+            if (orient == 'V') {
+                for (int i = last_row-2; i < last_row; i++) {
+                    if (i < 0 || this.grid[i][last_col].get_state() != '~') {
+                        north = false;
+                        break;
+                    }
+                    north = true;
+                }
+                for (int j = first_row+1; j < first_row+3; j++) {
+                    if (j >= this.rows || this.grid[j][first_col].get_state() != '~') {
+                        south = false;
+                        break;
+                    }
+                    south = true;
+                }
+                if (last_col - 2 < 0) {
+                    west = false;
+                } else {
+                    for (int x = last_row; x <= first_row; x++) {
+                        if (this.grid[x][last_col-1].get_state() != '~' || this.grid[x][last_col-2].get_state() != '~') {
+                            west = false;
+                            break;
+                        }
+                        west = true;
+                    }
+                }
+                if (last_col + 2 >= this.cols) {
+                    east = false;
+                } else {
+                    for (int y = last_row; y <= first_row; y++) {
+                        if (this.grid[y][last_col+1].get_state() != '~' || this.grid[y][last_col+2].get_state() != '~') {
+                            east = false;
+                            break;
+                        }
+                        east = true;
+                    }
+                }
+            // horizontal
+            } else if (orient == 'H') {
+                for (int i = first_col-2; i < first_col; i++) {
+                    if (i < 0 || this.grid[first_row][i].get_state() != '~') {
+                        west = false;
+                        break;
+                    }
+                    west = true;
+                }
+                for (int j = last_col+1; j < last_col+3; j++) {
+                    if (j >= this.cols || this.grid[first_row][j].get_state() != '~') {
+                        east = false;
+                        break;
+                    }
+                    east = true;
+                }
+                if (last_row - 2 < 0) {
+                    north = false;
+                } else {
+                    for (int x = first_col; x <= last_col; x++) {
+                        if (this.grid[first_row-1][x].get_state() != '~' || this.grid[first_row-2][x].get_state() != '~') {
+                            north = false;
+                            break;
+                        }
+                        north = true;
+                    }
+                }
+                if (last_row + 2 >= this.rows) {
+                    south = false;
+                } else {
+                    for (int y = first_col; y <= last_col; y++) {
+                        if (this.grid[first_row+2][y].get_state() != '~' || this.grid[first_row+2][y].get_state() != '~') {
+                            south = false;
+                            break;
+                        }
+                        south = true;
+                    }
+                }
+            }
+
+            if (north) {
+                valid_dirs.add("North");
+            }
+            if (south) {
+                valid_dirs.add("South");
+            }
+            if (east) {
+                valid_dirs.add("East");
+            }
+            if (west) {
+                valid_dirs.add("West");
+            }
+
+            if (valid_dirs.size() != 0) {
+                String mDir = valid_dirs.remove((int)(Math.random()*valid_dirs.size()));
+                int dist = (int)(Math.random()*2);
+                states = new char[loc.length];
+                newloc = new Square[loc.length];
+
+                switch (mDir) {
+                    case "North":
+                        for (int i = 0; i < loc.length; i++) {
+                            newloc[i] = this.grid[loc[i].get_row()+dist][loc[i].get_col()];
+                        }
+                        break;
+                    case "South":
+                        for (int i = 0; i < loc.length; i++) {
+                            newloc[i] = this.grid[loc[i].get_row()-dist][loc[i].get_col()];
+                        }
+                        break;
+                    case "East":
+                        for (int i = 0; i < loc.length; i++) {
+                            newloc[i] = this.grid[loc[i].get_row()][loc[i].get_col()+dist];
+                        }
+                        break;
+                    case "West":
+                        for (int i = 0; i < loc.length; i++) {
+                            newloc[i] = this.grid[loc[i].get_row()][loc[i].get_col()-dist];
+                        }
+                        break;
+                }
+
+                for (int i = 0; i < loc.length; i++) {
+                    states[i] = loc[i].get_state();
+                    loc[i].set_state('~');
+                }
+
+                for (int i = 0; i < loc.length; i++) {
+                    newloc[i].set_state(states[i]);
+                }
+                valid = true;
+            }
+        }   
+
+        System.out.println("Boat successfully moved!");
+        this.move_avail = false;
+        this.turns_move = 8;
+        enemy.turns++;
+
+        return true;
     }
 
     /****************************************************************
@@ -1154,13 +1337,121 @@ public class Grid {
             -> charge time: 10 turns
             -> if hit by airstrike or torpedo, immediately destoyed
     ****************************************************************/
-    public boolean decoy() {
-        return false;
+    public boolean decoy(Grid enemy) {
+        boolean valid = false;
+        boolean placed = false;
+        char orient = ' ';
+        String whole;
+        String confirm;
+        int row = 0;
+        int col = 0;
+    
+        Boat decoy = new Boat(2, true);
+        this.decoys.add(decoy);
+
+        while (!placed) {
+            valid = false;
+            System.out.printf("Placing Decoy");
+            System.out.print("Orientation ('V' for vertical, 'H' for horizontal): ");
+            while (!valid) {
+                whole = s.nextLine();
+                orient = whole.charAt(0);
+                if (whole.length() != 1) {
+                    System.out.print("Please enter a single character 'V' for vertical or 'H' for horizontal: ");
+                } else if (orient != 'V' && orient != 'H') {
+                    System.out.print("Please enter 'V' for vertical or 'H' for horizontal: ");
+                } else {
+                    valid = true;
+                }
+            }
+
+            /************************************************************
+                Second variable being set is the starting row.
+                The user inputs a number that is within bounds of the
+                set rows. If it is out of bounds, the user is prompted
+                for a new row. If the user does not enter an integer
+                they are prompted again to input row.
+            ************************************************************/
+            valid = false;
+            System.out.print("Row: ");
+            while (!valid) {
+                try {
+                    row = s.nextInt();
+                    if (row >= this.rows || row < 0) {
+                        System.out.println("Row Out of Bounds.");
+                        System.out.print("Please enter a valid row: ");
+                    } else {
+                        valid = false;
+                    }
+                } catch (Exception e) {
+                    System.out.print("Please enter an integer for starting row: ");
+                    s.nextLine();
+                }
+            }
+
+            /************************************************************
+                Third variable being set is the starting column.
+                The user inputs a number that is within bounds of the
+                set columns. If it is out of bounds, the user is prompted
+                for a new column. If the user does not enter an integer
+                they are prompted again to input column.
+            ************************************************************/
+            valid = false;
+            System.out.print("Column: ");
+            while (!valid) {
+                try {
+                    col = s.nextInt();
+                    if (col >= this.cols || col < 0) {
+                        System.out.println("Column Out of Bounds.");
+                        System.out.print("Please enter a valid column: ");
+                    } else {
+                        valid = false;
+                    }
+                } catch (Exception e) {
+                    System.out.print("Please enter an integer for starting column: ");
+                    s.nextLine();
+                }
+            }
+
+            s.nextLine();
+            System.out.println("Attempting to place Decoy...");
+            int succ = place_boat(decoy, row, col, orient);
+            if (succ == -1) {
+                System.out.println("Invalid Coordinates to for Decoy.");
+                System.out.print("Enter \"redo\" to enter new coordinates, or \"cancel\" to cancel powerup use: ");
+
+                valid = false;
+                while (!valid) {
+                    confirm = this.s.nextLine();
+                    if (confirm.compareTo("redo") == 0) {
+                        System.out.println("Restarting Process...");
+                        this.s.nextLine();
+                        valid = true;
+                    } else if (confirm.compareTo("cancel") == 0) {
+                        System.out.println("Cancelling powerup use...");
+                        return false;
+                    } else {
+                        // incorrect input handling
+                        System.out.print("\nPlease enter redo or confirm to continue: ");
+                    }
+                }
+            } else {
+                valid = true;
+            }
+           
+        }
+
+        System.out.println("Decoy Placed!");
+        this.decoy_alive = true;
+        this.decoy_avail = false;
+        enemy.turns++;
+
+        return true;
     }
 
     // displays the gameboard with the relevant information visible
     public void display() {
-        String returnString = this.playerName + "%n";
+        String returnString = this.playerName + "\n";
         for (int i = -1; i < this.rows; i++) {
             for (int j = -1; j < this.cols; j++) {
                 if (i == -1 && j == -1) {
@@ -1182,7 +1473,7 @@ public class Grid {
                     }
                 }
             }
-            returnString += "%n";
+            returnString += "\n";
         }
 
         /***********************************************************
@@ -1190,9 +1481,9 @@ public class Grid {
             the game is on and the ships that are left/have been sunk
         ***********************************************************/
         System.out.println(returnString);
-        System.out.printf("Turn %d%n", this.turns);
-        System.out.printf("Ships Remaining: %d%n", this.boatsLeft);
-        System.out.printf("Ships Sunk: %d%n", this.boatsSunk);
+        System.out.printf("Turn %d\n", this.turns);
+        System.out.printf("Ships Remaining: %d\n", this.boatsLeft);
+        System.out.printf("Ships Sunk: %d\n", this.boatsSunk);
     } // display
 
     // sets how many ships have been sunk by checking the state of each
@@ -1226,6 +1517,8 @@ public class Grid {
                         for (int j = 0; j < boat_loc.length; j++) {
                             boat_loc[j].set_state('D');
                         }
+                        this.decoy_alive = false;
+                        this.turns_decoy = 10;
                         return b;
                     }
                 }
@@ -1360,7 +1653,7 @@ public class Grid {
     public void inc_turns() { this.turns++; }
 
     public void display_AI_eval() {
-        String returnString = "Evaluations Board:%n";
+        String returnString = "Evaluations Board:\n";
         for (int i = -1; i < this.rows; i++) {
             for (int j = -1; j < this.cols; j++) {
                 if (i == -1 && j == -1) {
@@ -1377,7 +1670,7 @@ public class Grid {
                     returnString += this.weightGrid[i][j] + "   ";
                 }
             }
-            returnString += "%n";
+            returnString += "\n";
         }
         System.out.println(returnString);
     }
@@ -1385,7 +1678,7 @@ public class Grid {
     // toString to print the board in a readable fashion
     // each row and column is numbered from 0 to 1
     public String toString() {
-        String returnString = this.playerName + "%n";
+        String returnString = this.playerName + "\n";
         for (int i = -1; i < this.rows; i++) {
             for (int j = -1; j < this.cols; j++) {
                 if (i == -1 && j == -1) {
@@ -1402,7 +1695,7 @@ public class Grid {
                     returnString += this.grid[i][j].get_state() + "   ";
                 }
             }
-            returnString += "%n";
+            returnString += "\n";
         }
         return returnString;
     } // toString
