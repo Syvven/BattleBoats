@@ -51,9 +51,9 @@ Multiple Modes are available.
 - Powerup Mode
     - Like Multi Player, but with powerups!!
 
-BattleBoats includes these modes playable on boards that range from 4x4 to 50x50! (if you have the time)
-BattleBoats is playable right in the terminal (for now...)
-The AI implemented, although rudimentary, is not one to be trifled with.
+BattleBoats includes these modes playable on boards that range from 4x4 to 50x50! (if you have the time)\n
+BattleBoats is playable right in the terminal (for now...)\n
+The AI implemented, although rudimentary, is not one to be trifled with.\n
 
 
 ## Pre-Requisites
