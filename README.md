@@ -102,95 +102,32 @@ java Game
 
 and the game will run.
 
-## Available Functions
+## Modes
 
-- GET → http://127.0.0.1:7999/library/getCatalog
-    - returns the catalog of available authors and their books
-    - authors ordered by last name
-- GET → http://127.0.0.1:7999/library/getCheckouts
-    - returns a list of who has checked out books and which books they have checked out
-- POST → http://127.0.0.1:7999/library/checkoutBook
-    - allows the user to check out books
-    - input should be as such, each element being a string:
+BattleBoats comes with multiple modes:
 
->```
->// these comments should not be included in the input
->// each entry should be a string
->// author name is ordered such: "lastname, firstname middleinitial"
->// eg. J.R.R. Tolkien should be entered as "Tolkien, J.R.R."
->// each book must have an author (no empty string)
->// each author must have at least 1 book "no empty list"
->// each person must have at least 1 author and 1 book (no empty dictionary)
->// user does not need to have already checked out a book
->// any book that does not exist will not be checked out
->// each string must be exactly the same as the author/book/person shown in the catalog/checkouts
->// if you wish to know how which books are available, consult /library/getCatalog or /library/getCheckouts
->// if you wish to checkout for two people, you may do so, however, it wouldnt make logical sense
->{
->     <user-name1>: 
->        {
->             <author1>: [<book1>, <book2>, etc...], 
->             <author2>: [<book3>, <book4>, etc...], 
->             etc...
->        },
->     <user-name2>: 
->        { 
->             etc...
->        }
->}
->```
-
-- POST → http://127.0.0.1:7999/library/returnBook
-    - allows user to return books they have checked out
-    - inputs should be as such, each element being a string:
-
->```
->// these comments should not be included in the input
->// each entry should be a string
->// author name is ordered such: "lastname, firstname middleinitial"
->// eg. J.R.R. Tolkien should be entered as "Tolkien, J.R.R."
->// each book must have an author (no empty string)
->// each author must have at least 1 book "no empty list"
->// each person must have at least 1 author and 1 book (no empty dictionary)
->// user needs to have already checked out a book
->// any book that does not exist or was not checked out will not be returned
->// each string must be exactly the same as the author/book/person shown in the person's checkouts
->// if you wish to know how which books you checked out, consult /library/getCheckouts
->// if you wish to return for two people, you may do so, however, it wouldnt make logical sense
->{
->     <user-name1>: 
->        {
->             <author1>: [<book1>, <book2>, etc...], 
->             <author2>: [<book3>, <book4>, etc...], 
->             etc...
->        },
->     <user-name2>: 
->        { 
->             etc...
->        }
->}
->```
-
-- POST → http://127.0.0.1:7999/library/donateBooks
-    - allows the user to donate, or add, new books and authors to the catalog
-    - returns catalog with new books added
-    - input should be as follows, each element a string:
-
->```
->// these comments should not be included in the input
->// each entry should be formatted as a string
->// author name is ordered such: "lastname, firstname middleinitial"
->// eg. J.R.R. Tolkien should be entered as "Tolkien, J.R.R."
->// each book must have an author (no empty string)
->// each author must have at least 1 book "no empty list"
->// you may donate books that are already in the catalog -- cant have enough books
->// be sure to double check spelling of book/author name -- will be inserted in the catalog even with spelling errors
->{
->        <author1>: [<book1>, <book2>, etc...], 
->        <author2>: [<book3>, <book4>, etc...], 
->        etc...
->}
->```
+- Classic Single Player
+    - Classic single player pits the player against an AI
+    - It is similar to the popular board game BattleShip
+    - At the start of the game, the player is prompted to place boats
+        - The player can either manually place them or choose to randomly place them automatically
+    - The AI randomly places its boats
+    - Each turn, the current player specifies a coordiante to fire on
+    - If that coordinate has a ship, a hit occurs, otherwise a miss
+    - If every square of a ship has been hit, that ship has been sunk
+    - The game ends when all of one player's ships have been sunk
+- Classic Multi Player
+    - All the same rules apply as in single player
+    - Only difference is that the other player is another human, not an AI
+    - Each player specifies where to put their boats, so be sure not to peak at each other's boats!!
+- Powerup Mode
+    - Most rules are the same as classic
+    - Powerup mode is restricted to multi player and grids larger than 6x6
+    - In powerup mode, at certain turn milestones, the player earns powerups
+    - Each powerup has a different charge time
+    - Each powerup does something unique, the stronger the powerup, the longer the charge time
+    - Powerups include:
+        - Radar Bomb: 
 
 ## Bugs / Suggestions
 
