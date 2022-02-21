@@ -57,14 +57,28 @@ BattleBoats is playable right in the terminal (for now...)
 
 The AI implemented, although rudimentary, is not one to be trifled with.
 
+The player is able to place 6 different kinds of ships, each with different sizes. How many you get
+to place depends on the size of your board. The bigger the board, the more ships!!
 
 ## Pre-Requisites
 
-- [Java](https://www.python.org/)
+- [Java](https://www.java.com/en/)
 
 - A Terminal
 
 ## Running The Game
+
+### With .class Files
+
+cd into the proper directory in the terminal using: 
+
+```
+cd <pathname>
+```
+
+where <pathname> is something such as `/home/user/downloads/classfiles`
+
+
 
 ### via Command Line
 
