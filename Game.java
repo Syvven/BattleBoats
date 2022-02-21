@@ -97,7 +97,7 @@ public class Game {
             
             // checks for whose turn it is and executes accordingly
             if (player1Turn) {
-                playerAI.inc_turns();
+                
                 // displays the enemy's board in order for the player to fire upon
                 System.out.println("\nPlayer1's Turn:\n");
                 playerAI.display();
@@ -177,8 +177,9 @@ public class Game {
                 if (game_over) {
                     player1Win = true;
                 }
+                playerAI.inc_turns();
             } else if (playerAITurn) {
-                player1.inc_turns();
+                
                 System.out.println("PlayerAI's Turn:\n");
                 player1.display();
 
@@ -214,6 +215,7 @@ public class Game {
                 if (game_over) {
                     player1Win = false;
                 }
+                player1.inc_turns();
             }
         }
 
@@ -277,7 +279,7 @@ public class Game {
             
             // checks for whose turn it is and executes accordingly
             if (player1Turn) {
-                player2.inc_turns();
+                
                 // displays the enemy's board in order for the player to fire upon
                 System.out.println("Player1's Turn:\n");
                 player2.display();
@@ -358,8 +360,9 @@ public class Game {
                 if (game_over) {
                     player1Win = true;
                 }
+                player2.inc_turns();
             } else if (player2Turn) {
-                player1.inc_turns();
+                
                 // displays the enemy's board in order for the player to fire upon
                 System.out.println("Player2's Turn:\n");
                 player1.display();
@@ -439,6 +442,7 @@ public class Game {
                 if (game_over) {
                     player1Win = false;
                 }
+                player1.inc_turns();
             }
         }
 
@@ -467,26 +471,33 @@ public class Game {
         boolean player1Turn;
         boolean player2Turn;
         boolean valid = false;
+        boolean extra_valid = false;
+        boolean action_present = false;
         boolean spot_clear = false;
         boolean hit;
         boolean player1Win = false;
         boolean use_powerup = false;
+        boolean powerup_used = false;
         String action;
         Boat sink = null;
         int row = 0;
         int col = 0;
-
-        if (first.compareTo("player1") == 0) {
-            player1Turn = false;
-            player2Turn = true;
-        } else {
-            player2Turn = false;
-            player1Turn = true;
-        }
+        ArrayList<String> powerups;
 
         Grid player2 = new Grid(rows, cols, this.s, "Player 2", "Human");
         Grid player1 = new Grid(rows, cols, this.s, "Player 1", "Human");
 
+
+        if (first.compareTo("player1") == 0) {
+            player1Turn = false;
+            player2.inc_turns();
+            player2Turn = true;
+        } else {
+            player2Turn = false;
+            player1Turn = true;
+            player1.inc_turns();
+        }
+        
         // places boats for the AI and prompts the player to place their own boats
         player2.place_boats_player();
         player1.place_boats_player();
@@ -508,40 +519,89 @@ public class Game {
             
             // checks for whose turn it is and executes accordingly
             if (player1Turn) {
-                player2.inc_turns();
                 // displays the enemy's board in order for the player to fire upon
                 System.out.println("Player1's Turn:\n");
                 player2.display();
-                ArrayList<String> powerups = player1.get_available_powerups();
+                powerups = player1.get_available_powerups();
                 
                 System.out.println("Available Powerups: " + powerups.toString());
 
-                // prompts the user to input an action
-                System.out.print("Would you like to use a Powerup or Fire normally (input Powerup/Fire): ");
-                while (!valid) {
-                    action = this.s.nextLine();
-                    if (action.compareTo("Fire") == 0) {
-                        valid = true;
-                        use_powerup = false;
-                        this.s.nextLine();
-                    } else if (action.compareTo("Powerup") == 0) {
-                        valid = true;
-                        use_powerup = true;
-                        this.s.nextLine();
-                    } else {
-                        // incorrect input handling
-                        System.out.print("\nPlease enter either \"Fire\" or \"Powerup\": ");
-                    }
-                }
-                valid = false;
-                
-                if (use_powerup) {
-                    System.out.print("\nWhich powerup would you like to use?\nAvailable powerups are shown below the printed board: ");
-
+                if (powerups.size() > 0) {
+                    // prompts the user to input an action
+                    System.out.print("Would you like to use a Powerup or Fire normally (input Powerup/Fire): ");
+                    valid = false;
                     while (!valid) {
-                        valid = true;
+                        action = this.s.nextLine();
+                        if (action.compareTo("Fire") == 0) {
+                            valid = true;
+                            use_powerup = false;
+                        } else if (action.compareTo("Powerup") == 0) {
+                            valid = true;
+                            use_powerup = true;
+                        } else {
+                            // incorrect input handling
+                            System.out.print("\nPlease enter either \"Fire\" or \"Powerup\": ");
+                        }
                     }
                 } else {
+                    use_powerup = false;
+                }
+                
+            
+                if (use_powerup) {
+                    powerup_used = false;
+                    while (!powerup_used) {
+                        System.out.println("\nWhich powerup would you like to use?\nAvailable powerups are shown below the printed board.");
+                        System.out.print("If you would like to cancel powerup use, enter \"cancel\": ");
+
+                        valid = false;
+                        while (!valid) {
+                            action = this.s.nextLine();
+                            for (String pw : powerups) {
+                                if (action.compareTo(pw) == 0) {
+                                    action_present = true;
+                                    boolean succ = player1.use_powerup(pw, player2);
+                                    if (succ == false) {
+                                        System.out.println("Powerup use unsuccessful.\n");
+                                        System.out.print("Enter \"cancel\" to fire normally, or \"redo\" to use a different powerup: ");
+                                        extra_valid = false;
+                                        while (!extra_valid) {
+                                            action = this.s.nextLine();
+                                            if (action.compareTo("redo") == 0) {
+                                                extra_valid = true;
+                                                System.out.print("Enter powerup you would like to use: ");
+                                            } else if (action.compareTo("cancel") == 0) {
+                                                use_powerup = false;
+                                                powerup_used = true;
+                                                extra_valid = true;
+                                                valid = true;
+                                            } else {
+                                                // incorrect input handling
+                                                System.out.print("\nPlease enter either \"redo\" or \"cancel\": ");
+                                            }
+                                        }
+                                    } else {
+                                        System.out.println("Powerup successfully used.\n");
+                                        powerup_used = true;
+                                        valid = true;
+                                    }
+                                    break;
+                                }
+                            }
+                            if (action.compareTo("cancel") == 0) {
+                                powerup_used = true;
+                                use_powerup = false;
+                                valid = true;
+                            } else {    
+                                if (!action_present) {
+                                    System.out.print("Please input an available powerup: ");
+                                }
+                            }   
+                        }
+                    } 
+                }
+
+                if (!use_powerup) {
                     System.out.println("\nWhere would you like to fire?");
 
                     spot_clear = false;
@@ -621,41 +681,91 @@ public class Game {
                 if (game_over) {
                     player1Win = true;
                 }
-            } else if (player2Turn) {
                 player1.inc_turns();
+            } else if (player2Turn) {
+                
                 // displays the enemy's board in order for the player to fire upon
                 System.out.println("Player2's Turn:\n");
                 player1.display();
-                ArrayList<String> powerups = player2.get_available_powerups();
+                powerups = player2.get_available_powerups();
                 
                 System.out.println("Available Powerups: " + powerups.toString());
 
-                // prompts the user to input an action
-                System.out.print("Would you like to use a Powerup or Fire normally (input Powerup/Fire): ");
-                while (!valid) {
-                    action = this.s.nextLine();
-                    if (action.compareTo("Fire") == 0) {
-                        valid = true;
-                        use_powerup = false;
-                        this.s.nextLine();
-                    } else if (action.compareTo("Powerup") == 0) {
-                        valid = true;
-                        use_powerup = true;
-                        this.s.nextLine();
-                    } else {
-                        // incorrect input handling
-                        System.out.print("\nPlease enter either \"Fire\" or \"Powerup\": ");
-                    }
-                }
-                valid = false;
-                
-                if (use_powerup) {
-                    System.out.print("\nWhich powerup would you like to use?\nAvailable powerups are shown below the printed board: ");
-
+                if (powerups.size() > 0) {
+                    // prompts the user to input an action
+                    System.out.print("Would you like to use a Powerup or Fire normally (input Powerup/Fire): ");
+                    valid = false;
                     while (!valid) {
-                        valid = true;
+                        action = this.s.nextLine();
+                        if (action.compareTo("Fire") == 0) {
+                            valid = true;
+                            use_powerup = false;
+                        } else if (action.compareTo("Powerup") == 0) {
+                            valid = true;
+                            use_powerup = true;
+                        } else {
+                            // incorrect input handling
+                            System.out.print("\nPlease enter either \"Fire\" or \"Powerup\": ");
+                        }
                     }
                 } else {
+                    use_powerup = false;
+                }
+
+                
+                if (use_powerup) {
+                    powerup_used = false;
+                    while (!powerup_used) {
+                        System.out.println("\nWhich powerup would you like to use?\nAvailable powerups are shown below the printed board.");
+                        System.out.print("If you would like to cancel powerup use, enter \"cancel\": ");
+
+                        valid = false;
+                        while (!valid) {
+                            action = this.s.nextLine();
+                            for (String pw : powerups) {
+                                if (action.compareTo(pw) == 0) {
+                                    action_present = true;
+                                    boolean succ = player2.use_powerup(pw, player1);
+                                    if (succ == false) {
+                                        System.out.println("Powerup use unsuccessful.\n");
+                                        System.out.print("Enter \"cancel\" to fire normally, or \"redo\" to use a different powerup: ");
+                                        extra_valid = false;
+                                        while (!extra_valid) {
+                                            action = this.s.nextLine();
+                                            if (action.compareTo("redo") == 0) {
+                                                extra_valid = true;
+                                                System.out.print("Enter powerup you would like to use: ");
+                                            } else if (action.compareTo("cancel") == 0) {
+                                                use_powerup = false;
+                                                powerup_used = true;
+                                                extra_valid = true;
+                                                valid = true;
+                                            } else {
+                                                // incorrect input handling
+                                                System.out.print("\nPlease enter either \"redo\" or \"cancel\": ");
+                                            }
+                                        }
+                                    } else {
+                                        System.out.println("Powerup successfully used.\n");
+                                        powerup_used = true;
+                                        valid = true;
+                                    }
+                                    break;
+                                }
+                            }
+                            if (action.compareTo("cancel") == 0) {
+                                powerup_used = true;
+                                use_powerup = false;
+                                valid = true;
+                            } else {    
+                                if (!action_present) {
+                                    System.out.println("Please input an available powerup.");
+                                }
+                            }   
+                        }
+                    } 
+                } 
+                if (!use_powerup) {
                     System.out.println("\nWhere would you like to fire?");
 
                     spot_clear = false;
@@ -724,15 +834,16 @@ public class Game {
                     } else {
                         System.out.println("\nMiss!\n");
                     }
-                    
-                    // last thing the loop does is check for win and if it wins the loops terminates
-                    game_over = player1.check_win();
+                }    
+                // last thing the loop does is check for win and if it wins the loops terminates
+                game_over = player1.check_win();
 
-                    // if player2 wins, sets the win check to false
-                    if (game_over) {
-                        player1Win = false;
-                    }
+                // if player2 wins, sets the win check to false
+                if (game_over) {
+                    player1Win = false;
                 }
+                
+                player2.inc_turns();
             }
         }
 
@@ -789,7 +900,7 @@ public class Game {
             
             // checks for whose turn it is and executes accordingly
             if (playerAI1Turn) {
-                playerAI2.inc_turns();
+                
                 System.out.println("PlayerAI1's Turn:\n");
                 playerAI2.display();
 
@@ -825,8 +936,9 @@ public class Game {
                 if (game_over) {
                     playerAI1Win = true;
                 }
+                playerAI2.inc_turns();
             } else if (playerAI2Turn) {
-                playerAI1.inc_turns();
+                
                 System.out.println("PlayerAI2's Turn:\n");
                 playerAI1.display();
 
@@ -862,6 +974,7 @@ public class Game {
                 if (game_over) {
                     playerAI1Win = false;
                 }
+                playerAI1.inc_turns();
             }
         }
 

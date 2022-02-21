@@ -674,7 +674,6 @@ public class Grid {
     } // place_boat
 
     public boolean fire(int row, int col) {
-        update_avail_powerups();
         if (this.grid[row][col].get_state() == 'B') {
             this.grid[row][col].set_state('X');
             return true;
@@ -685,7 +684,7 @@ public class Grid {
     } // fire
 
     public boolean use_powerup(String powerup, Grid enemy) {
-        System.out.printf("%s chosen.\n", powerup);
+        System.out.printf("%s chosen.\n\n", powerup);
         switch (powerup) {
             case "Radar Bomb":
                 if (radar_avail) {
@@ -836,10 +835,9 @@ public class Grid {
             }
         }
 
-        System.out.printf("\n%d enemy squares identified.", counter);
+        System.out.printf("\n%d enemy squares identified.\n", counter);
         this.radar_avail = false;
         this.turns_radar = 5;
-        enemy.turns++;
 
         return true;
     }
@@ -880,9 +878,10 @@ public class Grid {
             while (!fired) {
                 System.out.printf("Specify the coordinates for shot %d.\n", i);
                 System.out.print("Row: ");
+                valid = false;
                 while (!valid) {
                     try {
-                        mRow = this.s.nextInt();
+                        mRow = Integer.parseInt(this.s.nextLine());
                         if (mRow >= this.rows || mRow < 0) {
                             // checks for out of bounds
                             System.out.println("Row Out of Bounds.");
@@ -892,7 +891,6 @@ public class Grid {
                         }
                     } catch (Exception e) {
                         System.out.print("Please enter an integer for the row: ");
-                        s.nextLine();
                     }
                 }
 
@@ -900,7 +898,7 @@ public class Grid {
                 valid = false;
                 while (!valid) {
                     try {
-                        mCol = this.s.nextInt();
+                        mCol = Integer.parseInt(this.s.nextLine());
                         if (mCol >= this.cols || mCol < 0) {
                             // checks for out of bounds
                             System.out.println("Column Out of Bounds.");
@@ -910,18 +908,27 @@ public class Grid {
                         }
                     } catch (Exception e) {
                         System.out.print("Please enter an integer for the column: ");
-                        s.nextLine();
+                    }
+                }
+                boolean repeat = false;
+                for (int j = 0; j < shots.length; j++) {
+                    if (shots[j][0] == mRow && shots[j][1] == mCol) {
+                        System.out.println("Repeat Coordinates Entered. Please enter new coordinates.");
+                        repeat = true;
+                        break;
                     }
                 }
                 
-                char state = enemy.grid[mRow][mCol].get_state();
-                if (state == 'X' || state == '-' || state == 'S' || state == 'D') {
-                    System.out.println("Invalid coordinates entered. Please enter a square that has not been fired on.");
-                } else {
-                    shots[currCoord][0] = mRow;
-                    shots[currCoord][1] = mCol;
-                    currCoord++;
-                    fired = true;
+                if (!repeat) {
+                    char state = enemy.grid[mRow][mCol].get_state();
+                    if (state == 'X' || state == '-' || state == 'S' || state == 'D') {
+                        System.out.println("Invalid coordinates entered. Please enter a square that has not been fired on.");
+                    } else {
+                        shots[currCoord][0] = mRow;
+                        shots[currCoord][1] = mCol;
+                        currCoord++;
+                        fired = true;
+                    }
                 }
             }
         }
@@ -934,7 +941,7 @@ public class Grid {
                                 shots[1][0], shots[1][1],
                                 shots[2][0], shots[2][1]);
         System.out.println("If these are not the desired coordinates, type \"redo\" to restart the process.");
-        System.out.println("If you wish to cancel the powerup use, type \"cance\"");
+        System.out.println("If you wish to cancel the powerup use, type \"cancel\"");
         System.out.print("Otherwise, type \"confirm\" to fire: ");
 
         valid = false;
@@ -943,11 +950,9 @@ public class Grid {
             confirm = this.s.nextLine();
             if (confirm.compareTo("redo") == 0) {
                 System.out.println("Restarting Process...");
-                this.s.nextLine();
                 multi_shot(enemy);
             } else if (confirm.compareTo("confirm") == 0) {
                 valid = true;
-                this.s.nextLine();
             } else if (confirm.compareTo("cancel") == 0) {
                 System.out.println("Cancelling powerup use...");
                 return false;
@@ -957,7 +962,7 @@ public class Grid {
             }
         }
 
-        System.out.println("Firing on specified Coordinates!");
+        System.out.println("\nFiring on specified Coordinates!\n");
         for (int i = 0; i < 3; i++) {
             boolean hit = enemy.fire(shots[i][0], shots[i][1]);
             if (hit) {
@@ -980,10 +985,10 @@ public class Grid {
             }
             System.out.printf("enemy %s.\n", sBoats.get(sBoats.size()-1).toString());
         }
+        System.out.println();
         
         this.multi_avail = false;
         this.turns_multi = 7;
-        enemy.turns++;
 
         return true;
     }
@@ -1063,9 +1068,11 @@ public class Grid {
 
             for (int i = sRow-2; i <= sRow+2; i++) {
                 for (int j = sCol-2; j <= sCol+2; j++) {
-                    char state = enemy.grid[i][j].get_state();
-                    if (state == 'B' || state == '~') {
-                        valid_squares.add(enemy.grid[i][j]);
+                    if (i > 0 && j > 0 && j < this.cols && i < this.rows) {
+                        char state = enemy.grid[i][j].get_state();
+                        if (state == 'B' || state == '~') {
+                            valid_squares.add(enemy.grid[i][j]);
+                        }
                     }
                 }
             }
@@ -1128,12 +1135,12 @@ public class Grid {
             if (sBoats.size() != 1) {
                 System.out.print(" and ");
             }
-            System.out.printf("enemy %s.\n", sBoats.get(sBoats.size()-1).toString());
+            System.out.printf("enemy %s.", sBoats.get(sBoats.size()-1).toString());
         }
+        System.out.println();
 
         this.scatter_avail = false;
         this.turns_scatter = 5;
-        enemy.turns++;
 
         return true;
     }
@@ -1159,7 +1166,7 @@ public class Grid {
 
         for (int i = 0; i < this.boats.length; i++) {
             loc = this.boats[i].get_loc();
-            for (int j = 0; j < loc.length; i++) {
+            for (int j = 0; j < loc.length; j++) {
                 if (loc[j].get_state() == 'X') {
                     movable.add(this.boats[i]);
                     break;
@@ -1174,11 +1181,13 @@ public class Grid {
             e.printStackTrace();
         }
 
+        valid = false;
         while (!valid) {
             if (movable.size() == 0) {
                 System.out.println("No Available Boat to Move.\nCancelling powerup use.");
                 return false;
             }
+            System.out.println("Piss");
 
             Boat mBoat = movable.remove((int)(Math.random()*movable.size()));
             char orient = mBoat.get_orient();
@@ -1316,14 +1325,16 @@ public class Grid {
                 for (int i = 0; i < loc.length; i++) {
                     newloc[i].set_state(states[i]);
                 }
+                mBoat.set_loc(newloc);
                 valid = true;
             }
         }   
 
+
         System.out.println("Boat successfully moved!");
         this.move_avail = false;
         this.turns_move = 8;
-        enemy.turns++;
+        
 
         return true;
     }
@@ -1351,8 +1362,8 @@ public class Grid {
 
         while (!placed) {
             valid = false;
-            System.out.printf("Placing Decoy");
-            System.out.print("Orientation ('V' for vertical, 'H' for horizontal): ");
+            System.out.printf("Placing Decoy\n");
+            System.out.print("Specify Orientation ('V' for vertical, 'H' for horizontal): ");
             while (!valid) {
                 whole = s.nextLine();
                 orient = whole.charAt(0);
@@ -1381,11 +1392,10 @@ public class Grid {
                         System.out.println("Row Out of Bounds.");
                         System.out.print("Please enter a valid row: ");
                     } else {
-                        valid = false;
+                        valid = true;
                     }
                 } catch (Exception e) {
                     System.out.print("Please enter an integer for starting row: ");
-                    s.nextLine();
                 }
             }
 
@@ -1405,7 +1415,7 @@ public class Grid {
                         System.out.println("Column Out of Bounds.");
                         System.out.print("Please enter a valid column: ");
                     } else {
-                        valid = false;
+                        valid = true;
                     }
                 } catch (Exception e) {
                     System.out.print("Please enter an integer for starting column: ");
@@ -1425,7 +1435,6 @@ public class Grid {
                     confirm = this.s.nextLine();
                     if (confirm.compareTo("redo") == 0) {
                         System.out.println("Restarting Process...");
-                        this.s.nextLine();
                         valid = true;
                     } else if (confirm.compareTo("cancel") == 0) {
                         System.out.println("Cancelling powerup use...");
@@ -1436,7 +1445,7 @@ public class Grid {
                     }
                 }
             } else {
-                valid = true;
+                placed = true;
             }
            
         }
@@ -1444,7 +1453,6 @@ public class Grid {
         System.out.println("Decoy Placed!");
         this.decoy_alive = true;
         this.decoy_avail = false;
-        enemy.turns++;
 
         return true;
     }
@@ -1650,7 +1658,11 @@ public class Grid {
     public int get_shots() { return this.shots; }
     public int get_turns() { return this.turns; }
     public Square[][] get_grid() { return this.grid; }
-    public void inc_turns() { this.turns++; }
+    public void inc_turns() { 
+        this.turns++; 
+        update_avail_powerups();
+    }
+    public void set_turns(int turns) { this.turns = turns; }
 
     public void display_AI_eval() {
         String returnString = "Evaluations Board:\n";
