@@ -76,7 +76,7 @@ cd into the proper directory in the terminal using:
 cd <pathname>
 ```
 
-where <pathname> is something such as `/home/user/downloads/classfiles`
+where \<pathname\> is something such as `/home/user/downloads/classfiles`
 
 
 
