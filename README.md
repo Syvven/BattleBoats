@@ -134,4 +134,4 @@ BattleBoats comes with multiple modes:
 *If you run into any bugs or issues while playing BattleBoats, or want to suggest any features, feel free to comment at [the github repository](https://github.com/Syvven/BattleShip)
 or [email me](hend0800@umn.edu) directly.* 
 
-*I hope that you enjoy this little library simulation!*
+*I hope that you enjoy BattlBoats!!*
