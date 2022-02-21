@@ -50,6 +50,9 @@ Multiple Modes are available.
 - Powerup Mode
     - Like Multi Player, but with powerups!!
 
+BattleBoats includes these modes playable on boards that range from 4x4 to 50x50! (if you have the time)
+
+
 ## Pre-Requisites
 
 - [Python](https://www.python.org/)
